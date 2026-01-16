@@ -1,0 +1,112 @@
+{
+  "$schema": "./schemas/platform-config.schema.json",
+  "configLevel": "platform",
+  "version": "2.0.0",
+  "platform": {
+    "name": "GitHub",
+    "type": "source-control",
+    "provider": "github.com",
+    "enterprise": false,
+    "api": {
+      "version": "v3",
+      "baseUrl": "https://api.github.com",
+      "graphql": "https://api.github.com/graphql"
+    }
+  },
+  "cicd": {
+    "provider": "github-actions",
+    "workflowsPath": ".github/workflows",
+    "runners": {
+      "default": "ubuntu-latest",
+      "available": ["ubuntu-latest", "macos-latest", "windows-latest"],
+      "selfHosted": false
+    },
+    "caching": {
+      "enabled": true,
+      "paths": ["node_modules", ".npm", "dist"]
+    },
+    "artifacts": {
+      "enabled": true,
+      "retention": 30,
+      "paths": ["coverage", "dist", "build"]
+    }
+  },
+  "alternatives": {
+    "bitbucket": {
+      "supported": true,
+      "configFile": "bitbucket-pipelines.yml",
+      "migration": {
+        "tool": "arog-migrate-bitbucket",
+        "script": "scripts/migrate-to-bitbucket.sh"
+      }
+    },
+    "gitlab": {
+      "supported": true,
+      "configFile": ".gitlab-ci.yml",
+      "migration": {
+        "tool": "arog-migrate-gitlab",
+        "script": "scripts/migrate-to-gitlab.sh"
+      }
+    },
+    "jenkins": {
+      "supported": true,
+      "configFile": "Jenkinsfile",
+      "migration": {
+        "tool": "arog-migrate-jenkins",
+        "script": "scripts/migrate-to-jenkins.sh"
+      }
+    },
+    "azureDevops": {
+      "supported": true,
+      "configFile": "azure-pipelines.yml",
+      "migration": {
+        "tool": "arog-migrate-azure",
+        "script": "scripts/migrate-to-azure.sh"
+      }
+    },
+    "circleci": {
+      "supported": true,
+      "configFile": ".circleci/config.yml",
+      "migration": {
+        "tool": "arog-migrate-circleci",
+        "script": "scripts/migrate-to-circleci.sh"
+      }
+    }
+  },
+  "integrations": {
+    "slack": {
+      "enabled": true,
+      "channels": {
+        "general": "#arog",
+        "deployments": "#deployments",
+        "security": "#security",
+        "monitoring": "#monitoring"
+      },
+      "notifications": {
+        "buildStatus": true,
+        "deployments": true,
+        "securityAlerts": true,
+        "prReviews": false
+      }
+    },
+    "jira": {
+      "enabled": true,
+      "url": "https://company.atlassian.net",
+      "project": "AROG",
+      "autoLink": true,
+      "transitions": true
+    },
+    "datadog": {
+      "enabled": true,
+      "apiKey": "${{ secrets.DATADOG_API_KEY }}",
+      "metrics": true,
+      "logs": true,
+      "traces": true
+    },
+    "sentry": {
+      "enabled": true,
+      "dsn": "${{ secrets.SENTRY_DSN }}",
+      "environment": ["production", "staging"]
+    }
+  }
+}

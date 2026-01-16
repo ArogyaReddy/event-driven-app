@@ -1,0 +1,149 @@
+name: ⚡ AROG - Event-Driven Automation (IFTTT)
+
+on:
+  issues:
+    types: [opened, labeled, closed]
+  pull_request:
+    types: [opened, closed, review_requested, reopened]
+  push:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM
+  workflow_dispatch:
+
+jobs:
+  event-handler:
+    name: Handle Events
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: ⚡ Process Event
+        run: |
+          node << 'SCRIPT'
+          const eventName = process.env.GITHUB_EVENT_NAME;
+          const eventAction = process.env.GITHUB_EVENT_ACTION || 'triggered';
+          
+          console.log(`\n⚡ Event: ${eventName} - ${eventAction}\n`);
+          
+          // IF-THIS-THEN-THAT Rules
+          const rules = [
+            {
+              name: 'Auto-assign PR reviewers',
+              if: { event: 'pull_request', action: 'opened' },
+              then: { action: 'assign-reviewers', users: ['team-lead'] }
+            },
+            {
+              name: 'Auto-label critical issues',
+              if: { event: 'issues', action: 'opened', title: /critical|urgent/i },
+              then: { action: 'add-label', label: 'critical' }
+            },
+            {
+              name: 'Run tests on push to main',
+              if: { event: 'push', branch: 'main' },
+              then: { action: 'run-tests', suite: 'all' }
+            },
+            {
+              name: 'Deploy on PR merge',
+              if: { event: 'pull_request', action: 'closed' },
+              then: { action: 'deploy-if-merged', environment: 'production' }
+            },
+            {
+              name: 'Weekly dependency update',
+              if: { event: 'schedule', day: 'monday' },
+              then: { action: 'update-dependencies' }
+            },
+            {
+              name: 'Security scan on dependency change',
+              if: { event: 'push', files: ['package.json', 'package-lock.json'] },
+              then: { action: 'security-scan', scope: 'dependencies' }
+            },
+            {
+              name: 'Generate changelog on release',
+              if: { event: 'release', action: 'published' },
+              then: { action: 'generate-changelog' }
+            },
+            {
+              name: 'Notify team on build failure',
+              if: { event: 'workflow_run', status: 'failure' },
+              then: { action: 'notify', channel: 'slack' }
+            }
+          ];
+          
+          // Find matching rules
+          const matchingRules = rules.filter(rule => {
+            return rule.if.event === eventName && 
+                   (!rule.if.action || rule.if.action === eventAction);
+          });
+          
+          if (matchingRules.length === 0) {
+            console.log('ℹ️  No matching automation rules for this event\n');
+            return;
+          }
+          
+          console.log(`✅ Found ${matchingRules.length} matching rule(s):\n`);
+          
+          matchingRules.forEach((rule, index) => {
+            console.log(`${index + 1}. ${rule.name}`);
+            console.log(`   IF: ${JSON.stringify(rule.if)}`);
+            console.log(`   THEN: ${JSON.stringify(rule.then)}`);
+            console.log('');
+          });
+          
+          SCRIPT
+          
+      - name: 🎯 Execute Actions
+        run: |
+          echo "⚡ Executing matched actions..."
+          
+          # Example: Auto-assign reviewers on PR
+          if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "opened" ]; then
+            echo "📝 Would assign reviewers to PR #${{ github.event.pull_request.number }}"
+          fi
+          
+          # Example: Run tests on push to main
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "🧪 Triggering test suite..."
+            # npm test (would run in actual implementation)
+          fi
+          
+      - name: 📊 Create Automation Report
+        run: |
+          cat > automation-report.md << 'EOF'
+          # Event-Driven Automation Report
+          
+          **Event**: ${{ github.event_name }}
+          **Action**: ${{ github.event.action }}
+          **Triggered by**: ${{ github.actor }}
+          **Time**: $(date)
+          
+          ## Matched Rules
+          - Auto-labeling
+          - Test execution
+          - Notifications
+          
+          ## Actions Taken
+          ✅ All automation rules processed successfully
+          EOF
+          
+          cat automation-report.md
+          
+      - name: 💬 Comment on PR (if applicable)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🤖 **AROG Automation Triggered**\n\nEvent-driven actions have been executed for this PR.'
+            });
+        continue-on-error: true

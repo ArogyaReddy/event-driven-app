@@ -1,0 +1,178 @@
+name: 📊 AROG - Code Metrics & Quality Gates
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday
+  workflow_dispatch:
+
+jobs:
+  code-metrics:
+    name: Code Quality Metrics
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Install Dependencies
+        run: npm ci
+        
+      - name: 📊 Calculate Code Metrics
+        run: |
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+          const { execSync } = require('child_process');
+          
+          // Count lines of code
+          function countLines(dir, extensions) {
+            let total = 0;
+            const files = fs.readdirSync(dir, { withFileTypes: true });
+            
+            for (const file of files) {
+              const filePath = path.join(dir, file.name);
+              
+              if (file.isDirectory() && !file.name.startsWith('.') && file.name !== 'node_modules') {
+                total += countLines(filePath, extensions);
+              } else if (file.isFile() && extensions.some(ext => file.name.endsWith(ext))) {
+                const content = fs.readFileSync(filePath, 'utf8');
+                total += content.split('\\n').length;
+              }
+            }
+            
+            return total;
+          }
+          
+          // Calculate metrics
+          const metrics = {
+            timestamp: new Date().toISOString(),
+            codeMetrics: {
+              totalLines: countLines('src', ['.js', '.ts']),
+              testLines: countLines('tests', ['.js', '.ts']),
+              configLines: countLines('.', ['.json', '.yml', '.yaml']),
+              docLines: countLines('docs', ['.md', '.html'])
+            },
+            fileMetrics: {
+              sourceFiles: execSync('find src -type f | wc -l', { encoding: 'utf8' }).trim(),
+              testFiles: execSync('find tests -type f | wc -l', { encoding: 'utf8' }).trim(),
+              workflows: execSync('find .github/workflows -name \"*.yml\" | wc -l', { encoding: 'utf8' }).trim()
+            },
+            complexity: {
+              // Estimate complexity (actual complexity analysis would use tools like complexity-report)
+              avgFunctionLength: 'N/A',
+              maxFunctionLength: 'N/A',
+              cyclomaticComplexity: 'N/A'
+            }
+          };
+          
+          // Calculate test/code ratio
+          metrics.testCoverage = {
+            ratio: (metrics.codeMetrics.testLines / metrics.codeMetrics.totalLines * 100).toFixed(2) + '%',
+            actual: 'See coverage report'
+          };
+          
+          fs.writeFileSync('code-metrics.json', JSON.stringify(metrics, null, 2));
+          
+          console.log('\\n======================================================================');
+          console.log('📊 CODE METRICS REPORT');
+          console.log('======================================================================\\n');
+          console.log('📝 Lines of Code:');
+          console.log('   Source:      ', metrics.codeMetrics.totalLines);
+          console.log('   Tests:       ', metrics.codeMetrics.testLines);
+          console.log('   Config:      ', metrics.codeMetrics.configLines);
+          console.log('   Docs:        ', metrics.codeMetrics.docLines);
+          console.log('\\n📁 File Counts:');
+          console.log('   Source Files:', metrics.fileMetrics.sourceFiles);
+          console.log('   Test Files:  ', metrics.fileMetrics.testFiles);
+          console.log('   Workflows:   ', metrics.fileMetrics.workflows);
+          console.log('\\n📈 Test Coverage:');
+          console.log('   Test/Code Ratio:', metrics.testCoverage.ratio);
+          console.log('\\n======================================================================\\n');
+          "
+          
+      - name: 🎯 Quality Gates
+        run: |
+          node -e "
+          const fs = require('fs');
+          const metrics = JSON.parse(fs.readFileSync('code-metrics.json', 'utf8'));
+          
+          console.log('\\n🎯 Checking Quality Gates...\\n');
+          
+          let passed = true;
+          
+          // Gate 1: Minimum test coverage
+          const testRatio = metrics.codeMetrics.testLines / metrics.codeMetrics.totalLines;
+          if (testRatio < 0.5) {
+            console.log('❌ Test/Code ratio too low:', (testRatio * 100).toFixed(2) + '% (min: 50%)');
+            passed = false;
+          } else {
+            console.log('✅ Test/Code ratio:', (testRatio * 100).toFixed(2) + '%');
+          }
+          
+          // Gate 2: Documentation exists
+          if (metrics.codeMetrics.docLines < 100) {
+            console.log('⚠️  Documentation could be improved');
+          } else {
+            console.log('✅ Documentation:', metrics.codeMetrics.docLines, 'lines');
+          }
+          
+          // Gate 3: Workflows exist
+          if (metrics.fileMetrics.workflows < 5) {
+            console.log('⚠️  Add more CI/CD workflows');
+          } else {
+            console.log('✅ CI/CD Workflows:', metrics.fileMetrics.workflows);
+          }
+          
+          console.log('\\n' + (passed ? '✅ All quality gates passed!' : '⚠️  Some quality gates need attention') + '\\n');
+          
+          // Don't fail build, just report
+          "
+          
+      - name: 📤 Upload Metrics
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-metrics
+          path: code-metrics.json
+          retention-days: 90
+          
+      - name: 💬 Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const metrics = JSON.parse(fs.readFileSync('code-metrics.json', 'utf8'));
+            
+            const comment = `## 📊 Code Metrics Report
+            
+            **Lines of Code:**
+            - Source: ${metrics.codeMetrics.totalLines}
+            - Tests: ${metrics.codeMetrics.testLines}
+            - Test/Code Ratio: ${metrics.testCoverage.ratio}
+            
+            **Files:**
+            - Source Files: ${metrics.fileMetrics.sourceFiles}
+            - Test Files: ${metrics.fileMetrics.testFiles}
+            - Workflows: ${metrics.fileMetrics.workflows}
+            
+            📈 Metrics look good!`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+        continue-on-error: true

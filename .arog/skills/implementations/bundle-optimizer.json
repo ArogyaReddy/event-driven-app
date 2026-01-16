@@ -1,0 +1,87 @@
+{
+  "name": "bundle-optimizer",
+  "category": "optimization",
+  "level": "expert",
+  "description": "Optimize bundle size through code splitting, tree shaking, lazy loading, and dependency analysis",
+  "version": "1.0.0",
+  "author": "@arog",
+  
+  "config": {
+    "target_size": "500KB",
+    "optimizations": {
+      "code_splitting": true,
+      "tree_shaking": true,
+      "lazy_loading": true,
+      "minification": true,
+      "compression": true,
+      "dynamic_imports": true
+    },
+    "analyze_dependencies": true,
+    "suggest_alternatives": true
+  },
+  
+  "execution": {
+    "command": "node",
+    "args": [".arog/skills/implementations/bundle-optimizer.js"],
+    "timeout": 120000
+  },
+  
+  "analysis_steps": [
+    "Analyze current bundle size",
+    "Identify large dependencies",
+    "Find duplicate code",
+    "Detect unused exports",
+    "Check for circular dependencies",
+    "Suggest code splitting points",
+    "Recommend lazy loading candidates",
+    "Generate optimization report"
+  ],
+  
+  "optimization_techniques": [
+    {
+      "name": "Replace Large Libraries",
+      "description": "Replace large libraries with smaller alternatives",
+      "examples": [
+        { "from": "moment.js (288KB)", "to": "date-fns (2KB)", "savings": "286KB" },
+        { "from": "lodash (full)", "to": "lodash-es (tree-shakeable)", "savings": "~200KB" }
+      ]
+    },
+    {
+      "name": "Code Splitting",
+      "description": "Split code into smaller chunks loaded on demand",
+      "example": {
+        "before": "import HeavyComponent from './HeavyComponent';",
+        "after": "const HeavyComponent = lazy(() => import('./HeavyComponent'));"
+      }
+    },
+    {
+      "name": "Dynamic Imports",
+      "description": "Load modules dynamically when needed",
+      "example": {
+        "before": "import analytics from 'analytics-lib';",
+        "after": "const analytics = await import('analytics-lib');"
+      }
+    }
+  ],
+  
+  "output": {
+    "format": "json",
+    "schema": {
+      "current_size": "string",
+      "optimized_size": "string",
+      "savings": "string",
+      "optimizations_applied": "array",
+      "recommendations": "array"
+    }
+  },
+  
+  "metrics": {
+    "bundle_size_before": "850KB",
+    "bundle_size_after": "420KB",
+    "reduction": "51%",
+    "load_time_improvement": "66%"
+  },
+  
+  "dependencies": ["webpack-bundle-analyzer", "terser", "gzip-size"],
+  "tags": ["optimization", "performance", "bundle-size", "code-splitting"]
+}

@@ -1,0 +1,163 @@
+{
+  "$schema": "./schemas/environment-config.schema.json",
+  "configLevel": "environment",
+  "version": "2.0.0",
+  "environments": {
+    "development": {
+      "name": "development",
+      "shortName": "dev",
+      "url": "http://localhost:3000",
+      "debug": true,
+      "sourceMaps": true,
+      "minification": false,
+      "monitoring": {
+        "enabled": false,
+        "verbose": true
+      },
+      "api": {
+        "baseUrl": "http://localhost:8080/api",
+        "timeout": 30000,
+        "retries": 0
+      },
+      "features": {
+        "hotReload": true,
+        "debugTools": true,
+        "mockData": true
+      },
+      "security": {
+        "https": false,
+        "cors": "permissive",
+        "headers": "minimal"
+      }
+    },
+    "staging": {
+      "name": "staging",
+      "shortName": "stg",
+      "url": "https://staging.arog.dev",
+      "debug": true,
+      "sourceMaps": true,
+      "minification": true,
+      "monitoring": {
+        "enabled": true,
+        "verbose": true,
+        "apm": true,
+        "logging": "debug"
+      },
+      "api": {
+        "baseUrl": "https://api-staging.arog.dev",
+        "timeout": 10000,
+        "retries": 3
+      },
+      "features": {
+        "hotReload": false,
+        "debugTools": true,
+        "mockData": false
+      },
+      "security": {
+        "https": true,
+        "cors": "restricted",
+        "headers": "strict",
+        "secrets": "vault"
+      },
+      "deployment": {
+        "strategy": "rolling",
+        "healthCheck": true,
+        "rollback": {
+          "automatic": true,
+          "conditions": ["error-rate > 10%"]
+        }
+      }
+    },
+    "production": {
+      "name": "production",
+      "shortName": "prod",
+      "url": "https://arog.dev",
+      "debug": false,
+      "sourceMaps": false,
+      "minification": true,
+      "monitoring": {
+        "enabled": true,
+        "verbose": false,
+        "apm": true,
+        "logging": "error",
+        "alerts": true,
+        "realUserMonitoring": true
+      },
+      "api": {
+        "baseUrl": "https://api.arog.dev",
+        "timeout": 5000,
+        "retries": 3,
+        "circuitBreaker": true
+      },
+      "features": {
+        "hotReload": false,
+        "debugTools": false,
+        "mockData": false
+      },
+      "security": {
+        "https": true,
+        "cors": "strict",
+        "headers": "strict",
+        "secrets": "vault",
+        "csp": true,
+        "hsts": true,
+        "xssProtection": true,
+        "noSniff": true
+      },
+      "performance": {
+        "cdn": true,
+        "caching": {
+          "enabled": true,
+          "strategy": "cache-first",
+          "ttl": 3600
+        },
+        "compression": "brotli",
+        "http2": true
+      },
+      "deployment": {
+        "strategy": "blue-green",
+        "canary": {
+          "enabled": true,
+          "percentage": 10,
+          "duration": "1h"
+        },
+        "healthCheck": true,
+        "smokeTests": true,
+        "rollback": {
+          "automatic": true,
+          "conditions": [
+            "error-rate > 5%",
+            "response-time > 2s",
+            "availability < 99.5%"
+          ]
+        },
+        "approvals": {
+          "required": true,
+          "approvers": ["tech-lead", "product-owner"],
+          "timeout": "24h"
+        }
+      },
+      "backup": {
+        "enabled": true,
+        "frequency": "daily",
+        "retention": "30d"
+      },
+      "disaster-recovery": {
+        "enabled": true,
+        "rpo": "1h",
+        "rto": "4h",
+        "multiRegion": true
+      }
+    }
+  },
+  "shared": {
+    "nodeVersion": "18.x",
+    "timezone": "UTC",
+    "locale": "en-US",
+    "logging": {
+      "format": "json",
+      "timestamp": true,
+      "requestId": true
+    }
+  }
+}

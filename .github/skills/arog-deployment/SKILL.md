@@ -104,7 +104,7 @@ jobs:
 
 ### Phase 3: Training (Week 3-4)
 1. Conduct team workshops
-2. Share AROG Bible (docs/arog-bible.html)
+2. Share AROG Agent (docs/arog-agent.html)
 3. Demo CLI commands and workflows
 4. Set up support channels (Slack/Teams)
 5. Create FAQ and troubleshooting guide

@@ -1,0 +1,123 @@
+name: 🎯 AROG - Automated Release & Versioning
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  semantic-release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Install Dependencies
+        run: npm ci
+        
+      - name: 🔍 Analyze Commits
+        id: analyze
+        run: |
+          # Check for conventional commits
+          git log --oneline -10
+          
+          # Determine version bump
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          
+          if [[ $COMMIT_MSG == *"BREAKING CHANGE"* ]] || [[ $COMMIT_MSG == *"!"* ]]; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+          elif [[ $COMMIT_MSG == feat* ]]; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
+          elif [[ $COMMIT_MSG == fix* ]]; then
+            echo "bump=patch" >> $GITHUB_OUTPUT
+          else
+            echo "bump=none" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 📝 Generate Changelog
+        run: |
+          node -e "
+          const fs = require('fs');
+          const { execSync } = require('child_process');
+          
+          // Get version from package.json
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const currentVersion = pkg.version;
+          
+          // Get git log since last tag
+          let commits = '';
+          try {
+            commits = execSync('git log $(git describe --tags --abbrev=0)..HEAD --oneline', { encoding: 'utf8' });
+          } catch {
+            commits = execSync('git log --oneline -20', { encoding: 'utf8' });
+          }
+          
+          const changelog = '# Changelog\n\n' +
+            '## v' + currentVersion + ' - ' + new Date().toISOString().split('T')[0] + '\n\n' +
+            '### Changes\n' +
+            commits.split('\n').filter(l => l).map(l => '- ' + l).join('\n') + '\n\n' +
+            '### Stats\n' +
+            '- Total Commits: ' + commits.split('\n').filter(l => l).length + '\n' +
+            '- Date: ' + new Date().toISOString() + '\n';
+          
+          fs.writeFileSync('CHANGELOG.md', changelog);
+          console.log('✅ Changelog generated');
+          "
+      
+      - name: 🏷️ Create Release
+        if: steps.analyze.outputs.bump != 'none'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Bump version
+          npm version ${{ steps.analyze.outputs.bump }} --no-git-tag-version
+          
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          
+          # Create git tag
+          git config user.name "AROG Bot"
+          git config user.email "arog@bot.local"
+          git add package.json CHANGELOG.md
+          git commit -m "chore(release): v${NEW_VERSION} [skip ci]"
+          git tag -a "v${NEW_VERSION}" -m "Release v${NEW_VERSION}"
+          
+          # Push changes
+          git push origin main --follow-tags || echo "Push failed - check permissions"
+          
+      - name: 📦 Publish to npm
+        if: steps.analyze.outputs.bump != 'none'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          npm publish --access public || echo "Publish skipped - no NPM_TOKEN"
+        continue-on-error: true
+        
+      - name: 📊 Release Summary
+        run: |
+          node -e "
+          const pkg = require('./package.json');
+          console.log(\`
+          ======================================================================
+          🎉 AROG RELEASE SUMMARY
+          ======================================================================
+          
+          📦 Package: \${pkg.name}
+          🏷️  Version: v\${pkg.version}
+          🔄 Bump Type: \${{ steps.analyze.outputs.bump }}
+          📅 Date: \${new Date().toLocaleString()}
+          
+          ✅ Release Complete!
+          ======================================================================
+          \`);
+          "

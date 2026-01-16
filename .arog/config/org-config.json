@@ -1,0 +1,318 @@
+{
+  "$schema": "./schemas/org-config.schema.json",
+  "configLevel": "organization",
+  "version": "2.0.0",
+  "organization": {
+    "name": "AROG",
+    "description": "Autonomous Robot for Organization Growth - Enterprise Standards",
+    "established": "2025-01-01",
+    "website": "https://arog.dev"
+  },
+  "standards": {
+    "codeQuality": {
+      "eslint": {
+        "extends": ["airbnb", "airbnb/hooks", "plugin:@typescript-eslint/recommended"],
+        "required": true,
+        "autoFix": true,
+        "maxWarnings": 0,
+        "ignorePatterns": ["dist/", "build/", "coverage/", "node_modules/"]
+      },
+      "prettier": {
+        "required": true,
+        "autoFormat": true,
+        "printWidth": 100,
+        "tabWidth": 2,
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "es5"
+      },
+      "typescript": {
+        "required": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "target": "ES2022",
+        "module": "ESNext"
+      },
+      "sonarQube": {
+        "enabled": true,
+        "quality_gate": "pass",
+        "coverage_threshold": 80,
+        "code_smells": "block_on_critical"
+      },
+      "complexity": {
+        "maxCyclomaticComplexity": 10,
+        "maxCognitiveComplexity": 15,
+        "maxLinesPerFunction": 50,
+        "maxDepth": 4
+      }
+    },
+    "testing": {
+      "required": true,
+      "minCoverage": {
+        "global": 80,
+        "statements": 80,
+        "branches": 75,
+        "functions": 80,
+        "lines": 80
+      },
+      "frameworks": {
+        "unit": ["jest", "vitest"],
+        "e2e": ["playwright", "cypress"],
+        "accessibility": ["axe-core", "pa11y"],
+        "visual": ["playwright", "chromatic"],
+        "load": ["k6", "artillery"],
+        "api": ["supertest", "jest"]
+      },
+      "requiredTestTypes": ["unit", "e2e", "accessibility"],
+      "testPyramid": {
+        "unit": 70,
+        "integration": 20,
+        "e2e": 10
+      },
+      "parallel": true,
+      "timeout": 30000,
+      "retries": 2
+    },
+    "security": {
+      "required": true,
+      "vulnerabilityThreshold": "moderate",
+      "scanFrequency": "daily",
+      "tools": {
+        "npm_audit": {
+          "enabled": true,
+          "auditLevel": "moderate",
+          "production": true
+        },
+        "secretScanning": {
+          "enabled": true,
+          "patterns": ["api_key", "password", "token", "secret", "private_key"],
+          "excludePatterns": [".env.example", "*.md"]
+        },
+        "sast": {
+          "enabled": true,
+          "tools": ["sonarqube", "semgrep"]
+        },
+        "sca": {
+          "enabled": true,
+          "tools": ["snyk", "dependabot"]
+        },
+        "owasp": {
+          "enabled": true,
+          "topTen": true,
+          "zapScan": true
+        }
+      },
+      "policies": {
+        "noCriticalVulnerabilities": true,
+        "noHighVulnerabilities": true,
+        "moderateRequireApproval": true,
+        "autoFixWhenPossible": true
+      }
+    },
+    "accessibility": {
+      "required": true,
+      "wcagLevel": "AA",
+      "wcagVersion": "2.1",
+      "compliance": {
+        "section508": true,
+        "aria": true,
+        "keyboardNavigation": true,
+        "screenReaderCompatible": true,
+        "colorContrast": true
+      },
+      "tools": ["axe-core", "pa11y", "lighthouse"],
+      "minScore": 90,
+      "autoFix": true
+    },
+    "performance": {
+      "required": true,
+      "budgets": {
+        "bundleSize": {
+          "maxSize": "500KB",
+          "maxChunks": 10,
+          "vendor": "300KB",
+          "app": "200KB"
+        },
+        "loadTime": {
+          "initial": "2s",
+          "interactive": "3s",
+          "complete": "5s"
+        },
+        "lighthouse": {
+          "performance": 90,
+          "accessibility": 90,
+          "bestPractices": 90,
+          "seo": 90
+        },
+        "webVitals": {
+          "LCP": "2.5s",
+          "FID": "100ms",
+          "CLS": "0.1",
+          "FCP": "1.8s",
+          "TTFB": "600ms"
+        }
+      },
+      "monitoring": {
+        "enabled": true,
+        "tools": ["lighthouse-ci", "webpagetest"],
+        "alerts": true
+      }
+    },
+    "documentation": {
+      "required": true,
+      "formats": {
+        "jsdoc": true,
+        "readme": true,
+        "api": "openapi",
+        "architecture": "adr"
+      },
+      "coverage": {
+        "minPublicAPICoverage": 100,
+        "minInternalAPICoverage": 80
+      },
+      "standards": {
+        "markdown": true,
+        "html": true,
+        "interactive": true
+      }
+    }
+  },
+  "deployment": {
+    "environments": ["dev", "staging", "production"],
+    "strategies": {
+      "dev": "continuous",
+      "staging": "on-merge",
+      "production": "manual-approval"
+    },
+    "approvals": {
+      "staging": ["tech-lead"],
+      "production": ["tech-lead", "security-team"]
+    },
+    "rollback": {
+      "enabled": true,
+      "automatic": false,
+      "conditions": ["error-rate > 5%", "response-time > 2s"]
+    },
+    "zeroDowntime": true,
+    "canary": {
+      "enabled": true,
+      "percentage": 10,
+      "duration": "1h"
+    }
+  },
+  "codeReview": {
+    "required": true,
+    "minReviewers": 2,
+    "requireCodeOwners": true,
+    "requireApprovals": 2,
+    "dismissStaleReviews": true,
+    "requireBranchUpToDate": true,
+    "checks": {
+      "tests": "required",
+      "linting": "required",
+      "security": "required",
+      "coverage": "required",
+      "accessibility": "required"
+    }
+  },
+  "costOptimization": {
+    "enabled": true,
+    "modelRouting": {
+      "freeModels": {
+        "provider": "openai",
+        "model": "gpt-4o-mini",
+        "costPerToken": 0.0,
+        "useCases": [
+          "test",
+          "lint",
+          "health",
+          "documentation",
+          "format",
+          "simple-query",
+          "status-check",
+          "validation"
+        ]
+      },
+      "paidModels": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4.5",
+        "costPerToken": 0.003,
+        "useCases": [
+          "generate",
+          "create",
+          "build",
+          "security",
+          "architecture",
+          "performance-optimization",
+          "complex-refactoring",
+          "code-review-large"
+        ]
+      }
+    },
+    "expectedSavings": "70-85%",
+    "monitoring": true,
+    "budgets": {
+      "monthly": "$100",
+      "perDeveloper": "$10",
+      "perProject": "$50"
+    }
+  },
+  "automation": {
+    "cicd": {
+      "platforms": ["github-actions", "bitbucket-pipelines", "gitlab-ci", "jenkins"],
+      "onCommit": ["lint", "unit-tests", "build"],
+      "onPullRequest": ["all-tests", "security", "performance", "accessibility", "code-review"],
+      "onMerge": ["full-validation", "build", "deploy-staging"],
+      "scheduled": {
+        "daily": ["security-scan", "dependency-updates"],
+        "weekly": ["performance-regression", "accessibility-audit"],
+        "monthly": ["full-security-audit", "license-compliance"]
+      }
+    },
+    "agents": {
+      "enabled": true,
+      "count": 15,
+      "autoInvoke": true,
+      "parallelExecution": true
+    },
+    "workflows": {
+      "enabled": true,
+      "count": 22,
+      "orchestrator": "arog-master-orchestrator"
+    }
+  },
+  "compliance": {
+    "gdpr": true,
+    "hipaa": false,
+    "sox": false,
+    "pci": false,
+    "iso27001": true,
+    "licenses": {
+      "allowed": ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC"],
+      "blocked": ["GPL", "AGPL", "LGPL"],
+      "requireApproval": ["BSD-2-Clause", "MPL-2.0"]
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics": {
+      "performance": true,
+      "errors": true,
+      "usage": true,
+      "costs": true,
+      "quality": true
+    },
+    "alerts": {
+      "email": true,
+      "slack": true,
+      "pagerduty": false
+    },
+    "reporting": {
+      "frequency": "weekly",
+      "dashboard": true,
+      "exportFormat": ["json", "csv", "pdf"]
+    }
+  }
+}

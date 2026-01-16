@@ -1,0 +1,238 @@
+{
+  "$schema": "./schemas/repo-config.schema.json",
+  "configLevel": "repository",
+  "version": "2.0.0",
+  "extends": "project-config.json",
+  "repository": {
+    "name": "arog",
+    "fullName": "organization/arog",
+    "description": "AROG - Autonomous Robot for Organization Growth",
+    "url": "https://github.com/organization/arog",
+    "type": "git",
+    "provider": "github",
+    "visibility": "public",
+    "defaultBranch": "main",
+    "protected": true
+  },
+  "branches": {
+    "protection": {
+      "main": {
+        "required": true,
+        "requirePullRequest": true,
+        "requiredReviews": 2,
+        "dismissStaleReviews": true,
+        "requireCodeOwnerReviews": true,
+        "requireStatusChecks": true,
+        "requiredStatusChecks": [
+          "arog-unit-tests",
+          "arog-e2e-tests",
+          "arog-code-quality",
+          "arog-security",
+          "arog-accessibility",
+          "arog-build"
+        ],
+        "enforceAdmins": true,
+        "requireLinearHistory": true,
+        "allowForcePushes": false,
+        "allowDeletions": false,
+        "requireSignedCommits": true
+      },
+      "develop": {
+        "required": true,
+        "requirePullRequest": true,
+        "requiredReviews": 1,
+        "requireStatusChecks": true,
+        "requiredStatusChecks": [
+          "arog-unit-tests",
+          "arog-code-quality"
+        ]
+      }
+    },
+    "naming": {
+      "feature": "feature/*",
+      "bugfix": "bugfix/*",
+      "hotfix": "hotfix/*",
+      "release": "release/*"
+    },
+    "autoDelete": {
+      "onMerge": true,
+      "exemptions": ["main", "develop"]
+    }
+  },
+  "pullRequests": {
+    "template": ".github/PULL_REQUEST_TEMPLATE.md",
+    "autoAssignReviewers": true,
+    "autoLabels": true,
+    "requiredLabels": ["type", "priority", "status"],
+    "allowedLabels": [
+      "type:feature",
+      "type:bugfix",
+      "type:hotfix",
+      "type:docs",
+      "type:refactor",
+      "priority:critical",
+      "priority:high",
+      "priority:medium",
+      "priority:low",
+      "status:review",
+      "status:wip",
+      "status:blocked"
+    ],
+    "checks": {
+      "titleFormat": "conventional-commits",
+      "descriptionRequired": true,
+      "linkedIssuesRequired": true,
+      "minDescriptionLength": 50
+    },
+    "automation": {
+      "autoMerge": {
+        "enabled": true,
+        "conditions": [
+          "all-checks-pass",
+          "approved-by-2",
+          "no-conflicts",
+          "up-to-date"
+        ],
+        "method": "squash"
+      },
+      "autoReview": {
+        "enabled": true,
+        "agent": "@arog-code-reviewer"
+      }
+    }
+  },
+  "issues": {
+    "templates": [
+      ".github/ISSUE_TEMPLATE/bug_report.md",
+      ".github/ISSUE_TEMPLATE/feature_request.md",
+      ".github/ISSUE_TEMPLATE/documentation.md"
+    ],
+    "autoAssign": true,
+    "autoLabel": true,
+    "staleAfter": "30d",
+    "closeStaleAfter": "7d"
+  },
+  "codeOwners": {
+    "enabled": true,
+    "file": ".github/CODEOWNERS",
+    "rules": {
+      "*": ["@platform-team"],
+      "*.md": ["@documentation-team"],
+      ".github/": ["@devops-team"],
+      ".arog/config/": ["@platform-leads"],
+      "docs/": ["@documentation-team", "@platform-team"],
+      "tests/": ["@qa-team", "@platform-team"],
+      "scripts/": ["@devops-team"],
+      ".github/workflows/": ["@devops-team", "@platform-leads"]
+    }
+  },
+  "webhooks": {
+    "enabled": true,
+    "events": [
+      "push",
+      "pull_request",
+      "pull_request_review",
+      "issues",
+      "release",
+      "deployment"
+    ],
+    "integrations": {
+      "slack": {
+        "enabled": true,
+        "channels": {
+          "general": "#arog-updates",
+          "deployments": "#arog-deployments",
+          "security": "#arog-security",
+          "errors": "#arog-errors"
+        }
+      },
+      "jira": {
+        "enabled": true,
+        "autoLink": true,
+        "transitions": {
+          "onPROpen": "In Review",
+          "onPRMerge": "Done"
+        }
+      }
+    }
+  },
+  "secrets": {
+    "required": [
+      "NPM_TOKEN",
+      "DOCKER_USERNAME",
+      "DOCKER_PASSWORD",
+      "AWS_ACCESS_KEY_ID",
+      "AWS_SECRET_ACCESS_KEY",
+      "SLACK_WEBHOOK_URL"
+    ],
+    "rotation": "30d",
+    "scanning": {
+      "enabled": true,
+      "pushProtection": true
+    }
+  },
+  "actions": {
+    "permissions": {
+      "contents": "write",
+      "pull-requests": "write",
+      "issues": "write",
+      "deployments": "write",
+      "packages": "write"
+    },
+    "environments": {
+      "production": {
+        "protection": true,
+        "reviewers": ["@platform-leads", "@security-team"],
+        "waitTimer": 5,
+        "secrets": ["PROD_API_KEY", "PROD_DB_URL"]
+      },
+      "staging": {
+        "protection": false,
+        "secrets": ["STAGING_API_KEY", "STAGING_DB_URL"]
+      }
+    },
+    "concurrency": {
+      "group": "${{ github.workflow }}-${{ github.ref }}",
+      "cancelInProgress": true
+    }
+  },
+  "notifications": {
+    "email": {
+      "enabled": true,
+      "recipients": ["platform-team@company.com"]
+    },
+    "slack": {
+      "enabled": true,
+      "webhook": "${{ secrets.SLACK_WEBHOOK_URL }}",
+      "events": {
+        "deployment": true,
+        "release": true,
+        "securityAlert": true,
+        "buildFailure": true
+      }
+    }
+  },
+  "automation": {
+    "dependabot": {
+      "enabled": true,
+      "packageEcosystem": "npm",
+      "directory": "/",
+      "schedule": "weekly",
+      "openPullRequestsLimit": 10,
+      "reviewers": ["@platform-team"],
+      "labels": ["dependencies", "automated"]
+    },
+    "codeql": {
+      "enabled": true,
+      "languages": ["javascript", "typescript"],
+      "schedule": "weekly"
+    },
+    "staleBot": {
+      "enabled": true,
+      "daysUntilStale": 30,
+      "daysUntilClose": 7,
+      "exemptLabels": ["pinned", "security"],
+      "staleLabel": "stale"
+    }
+  }
+}

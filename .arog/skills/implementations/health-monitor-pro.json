@@ -1,0 +1,148 @@
+{
+  "name": "health-monitor-pro",
+  "category": "monitoring",
+  "level": "advanced",
+  "description": "Comprehensive system health monitoring including uptime, performance, errors, and resource usage",
+  "version": "1.0.0",
+  "author": "@arog",
+  
+  "config": {
+    "check_interval": "5m",
+    "metrics": {
+      "uptime": true,
+      "response_time": true,
+      "error_rate": true,
+      "cpu_usage": true,
+      "memory_usage": true,
+      "disk_usage": true
+    },
+    "thresholds": {
+      "response_time": "200ms",
+      "error_rate": "1%",
+      "cpu_usage": "70%",
+      "memory_usage": "80%"
+    },
+    "alerts": {
+      "enabled": true,
+      "channels": ["slack", "email", "pagerduty"]
+    }
+  },
+  
+  "execution": {
+    "command": "node",
+    "args": [".arog/skills/implementations/health-monitor-pro.js"],
+    "timeout": 60000,
+    "schedule": "*/5 * * * *"
+  },
+  
+  "health_checks": [
+    {
+      "name": "API Health",
+      "type": "http",
+      "endpoint": "/health",
+      "expected_status": 200,
+      "timeout": "5s"
+    },
+    {
+      "name": "Database Connection",
+      "type": "tcp",
+      "host": "localhost",
+      "port": 5432,
+      "timeout": "3s"
+    },
+    {
+      "name": "Redis Cache",
+      "type": "redis",
+      "host": "localhost",
+      "port": 6379,
+      "timeout": "2s"
+    },
+    {
+      "name": "Disk Space",
+      "type": "system",
+      "metric": "disk_usage",
+      "threshold": "90%"
+    },
+    {
+      "name": "Memory Usage",
+      "type": "system",
+      "metric": "memory_usage",
+      "threshold": "85%"
+    }
+  ],
+  
+  "metrics_collected": [
+    {
+      "name": "response_time",
+      "type": "histogram",
+      "unit": "ms",
+      "buckets": [10, 50, 100, 200, 500, 1000]
+    },
+    {
+      "name": "error_rate",
+      "type": "gauge",
+      "unit": "percent"
+    },
+    {
+      "name": "requests_per_second",
+      "type": "counter",
+      "unit": "req/s"
+    },
+    {
+      "name": "active_connections",
+      "type": "gauge",
+      "unit": "connections"
+    }
+  ],
+  
+  "output": {
+    "format": "json",
+    "schema": {
+      "status": "string",
+      "uptime": "number",
+      "checks": "array",
+      "metrics": "object",
+      "alerts": "array"
+    }
+  },
+  
+  "alerting": {
+    "rules": [
+      {
+        "name": "High Error Rate",
+        "condition": "error_rate > 5%",
+        "severity": "critical",
+        "action": "notify_oncall"
+      },
+      {
+        "name": "Slow Response Time",
+        "condition": "p95_response_time > 500ms",
+        "severity": "warning",
+        "action": "notify_team"
+      },
+      {
+        "name": "High CPU Usage",
+        "condition": "cpu_usage > 80%",
+        "severity": "warning",
+        "action": "auto_scale"
+      }
+    ]
+  },
+  
+  "dashboard": {
+    "enabled": true,
+    "metrics": [
+      "uptime",
+      "response_time (p50, p95, p99)",
+      "error_rate",
+      "requests_per_second",
+      "active_connections",
+      "cpu_usage",
+      "memory_usage"
+    ],
+    "refresh_interval": "30s"
+  },
+  
+  "dependencies": ["prom-client", "node-os-utils", "axios"],
+  "tags": ["monitoring", "health-check", "metrics", "alerts", "observability"]
+}

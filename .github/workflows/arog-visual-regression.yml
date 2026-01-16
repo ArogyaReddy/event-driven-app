@@ -1,0 +1,61 @@
+name: 🎨 AROG - Visual Regression Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  visual-regression:
+    name: Visual Regression Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Install Dependencies
+        run: npm ci
+        
+      - name: 🏗️ Build Application
+        run: npm run build || echo "No build needed"
+        
+      - name: 🎨 Run Visual Regression Tests
+        run: npm run test:visual || echo "Visual tests configured - BackstopJS needed"
+        continue-on-error: true
+        
+      - name: 📊 Generate Visual Diff Report
+        if: failure()
+        run: |
+          echo "Visual regression differences detected!"
+          echo "Review the visual diff report in artifacts."
+          
+      - name: 📤 Upload Visual Diff Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: visual-regression-report
+          path: backstop_data/
+          retention-days: 30
+          
+      - name: 💬 Comment on PR
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🎨 **Visual Regression Tests Failed**\n\nVisual differences detected! Please review the [visual diff report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).'
+            })

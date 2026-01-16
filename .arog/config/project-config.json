@@ -1,0 +1,223 @@
+{
+  "$schema": "./schemas/project-config.schema.json",
+  "configLevel": "project",
+  "version": "2.0.0",
+  "extends": "team-config.json",
+  "project": {
+    "name": "AROG",
+    "description": "Autonomous Robot for Organization Growth - Complete Automation Platform",
+    "type": "automation-framework",
+    "repository": "https://github.com/org/arog",
+    "version": "2.0.0",
+    "license": "MIT",
+    "owner": "platform-team",
+    "status": "production",
+    "createdDate": "2024-12-01",
+    "lastUpdated": "2025-01-16"
+  },
+  "overrides": {
+    "testing": {
+      "minCoverage": {
+        "global": 100,
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      },
+      "frameworks": {
+        "unit": ["jest"],
+        "e2e": ["playwright"],
+        "accessibility": ["axe-core"],
+        "visual": ["playwright"],
+        "api": ["supertest"]
+      },
+      "requiredTestTypes": ["unit", "e2e", "accessibility", "visual", "integration"],
+      "customTests": {
+        "bundleSize": {
+          "enabled": true,
+          "maxSize": "500KB"
+        },
+        "performanceRegression": {
+          "enabled": true,
+          "baseline": "main"
+        }
+      }
+    },
+    "performance": {
+      "budgets": {
+        "bundleSize": {
+          "maxSize": "500KB",
+          "vendor": "300KB",
+          "app": "200KB"
+        },
+        "lighthouse": {
+          "performance": 95,
+          "accessibility": 100,
+          "bestPractices": 95,
+          "seo": 95
+        }
+      },
+      "monitoring": {
+        "realUserMonitoring": true,
+        "syntheticMonitoring": true,
+        "alerts": {
+          "performanceDegradation": true,
+          "errorRate": true,
+          "responseTime": true
+        }
+      }
+    },
+    "deployment": {
+      "environments": ["dev", "staging", "production"],
+      "strategies": {
+        "dev": "continuous",
+        "staging": "on-merge-to-develop",
+        "production": "on-release-tag"
+      },
+      "approvals": {
+        "staging": ["tech-lead"],
+        "production": ["tech-lead", "product-owner", "security-lead"]
+      },
+      "zeroDowntime": true,
+      "rollback": {
+        "enabled": true,
+        "automatic": true,
+        "conditions": [
+          "error-rate > 5%",
+          "response-time > 3s",
+          "availability < 99%"
+        ]
+      },
+      "canary": {
+        "enabled": true,
+        "percentage": 5,
+        "duration": "30m",
+        "increments": [5, 25, 50, 100],
+        "metrics": ["error-rate", "response-time", "cpu", "memory"]
+      },
+      "blueGreen": {
+        "enabled": true,
+        "switchoverTime": "5m"
+      }
+    },
+    "security": {
+      "vulnerabilityThreshold": "low",
+      "requireSecurityReview": true,
+      "penetrationTesting": {
+        "enabled": true,
+        "frequency": "quarterly"
+      },
+      "secrets": {
+        "vault": "hashicorp-vault",
+        "rotation": "30d"
+      }
+    }
+  },
+  "projectSpecific": {
+    "features": {
+      "aiAgents": 15,
+      "workflows": 22,
+      "skills": 11,
+      "prompts": 3,
+      "costOptimization": true,
+      "modelRouting": true
+    },
+    "architecture": {
+      "type": "modular",
+      "patterns": ["plugin-architecture", "event-driven", "microservices"],
+      "documentation": "docs/architecture/"
+    },
+    "dependencies": {
+      "critical": ["jest", "playwright", "eslint", "prettier", "typescript"],
+      "updateStrategy": "conservative",
+      "autoUpdate": {
+        "patch": true,
+        "minor": false,
+        "major": false
+      },
+      "lockfile": "package-lock.json",
+      "auditFrequency": "daily"
+    },
+    "build": {
+      "tool": "webpack",
+      "target": "es2022",
+      "minify": true,
+      "sourceMaps": true,
+      "optimization": {
+        "treeshaking": true,
+        "codeSplitting": true,
+        "minification": true,
+        "compression": "gzip"
+      },
+      "outputDir": "dist",
+      "publicPath": "/"
+    },
+    "monitoring": {
+      "apm": {
+        "enabled": true,
+        "tool": "datadog"
+      },
+      "logging": {
+        "level": "info",
+        "format": "json",
+        "transport": ["console", "file", "cloudwatch"]
+      },
+      "metrics": {
+        "custom": true,
+        "business": true,
+        "technical": true
+      }
+    },
+    "documentation": {
+      "location": "docs/",
+      "format": "html",
+      "interactive": true,
+      "autoGenerate": true,
+      "versioned": true,
+      "languages": ["en"]
+    },
+    "release": {
+      "strategy": "semantic-versioning",
+      "branches": {
+        "main": "production",
+        "develop": "staging",
+        "feature/*": "dev"
+      },
+      "changelog": {
+        "enabled": true,
+        "format": "conventional-commits"
+      },
+      "notes": {
+        "auto": true,
+        "template": ".github/release-template.md"
+      }
+    }
+  },
+  "localDevelopment": {
+    "nodeVersion": "18.x",
+    "packageManager": "npm",
+    "editor": {
+      "vscode": true,
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.copilot-chat"
+      ],
+      "settings": {
+        "formatOnSave": true,
+        "eslint.autoFixOnSave": true
+      }
+    },
+    "preCommitHooks": {
+      "enabled": true,
+      "hooks": ["lint", "format", "test-staged", "type-check"]
+    },
+    "scripts": {
+      "dev": "npm run dev",
+      "test": "npm test",
+      "lint": "npm run lint",
+      "format": "npm run format"
+    }
+  }
+}

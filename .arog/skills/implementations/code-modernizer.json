@@ -1,0 +1,78 @@
+{
+  "name": "code-modernizer",
+  "category": "transformation",
+  "level": "advanced",
+  "description": "Automatically modernize JavaScript/TypeScript code to latest standards (ES2023+)",
+  "version": "1.0.0",
+  "author": "@arog",
+  
+  "config": {
+    "target_version": "ES2023",
+    "transformations": {
+      "callbacks_to_async": true,
+      "var_to_const_let": true,
+      "string_concatenation_to_template": true,
+      "optional_chaining": true,
+      "nullish_coalescing": true,
+      "destructuring": true,
+      "arrow_functions": true,
+      "spread_operator": true,
+      "for_loops_to_array_methods": true
+    },
+    "preserve_behavior": true,
+    "run_tests_after": true
+  },
+  
+  "execution": {
+    "command": "node",
+    "args": [".arog/skills/implementations/code-modernizer.js"],
+    "timeout": 180000
+  },
+  
+  "transformations_applied": [
+    {
+      "name": "callbacks_to_async",
+      "description": "Convert callback-based functions to async/await",
+      "example": {
+        "before": "function getUser(id, callback) { db.find(id, callback); }",
+        "after": "async function getUser(id) { return await db.find(id); }"
+      }
+    },
+    {
+      "name": "optional_chaining",
+      "description": "Use optional chaining (?.) operator",
+      "example": {
+        "before": "const street = user && user.address && user.address.street;",
+        "after": "const street = user?.address?.street;"
+      }
+    },
+    {
+      "name": "nullish_coalescing",
+      "description": "Use nullish coalescing (??) operator",
+      "example": {
+        "before": "const port = config.port || 3000;",
+        "after": "const port = config.port ?? 3000;"
+      }
+    }
+  ],
+  
+  "output": {
+    "format": "json",
+    "schema": {
+      "files_modified": "number",
+      "transformations_applied": "number",
+      "tests_passed": "boolean",
+      "diff_summary": "string"
+    }
+  },
+  
+  "safety": {
+    "create_backup": true,
+    "run_tests_before": true,
+    "run_tests_after": true,
+    "rollback_on_failure": true
+  },
+  
+  "dependencies": ["@babel/core", "@babel/preset-env", "jscodeshift"],
+  "tags": ["transformation", "modernization", "es6+", "refactoring"]
+}

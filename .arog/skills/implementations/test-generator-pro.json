@@ -1,0 +1,59 @@
+{
+  "name": "test-generator-pro",
+  "category": "generation",
+  "level": "expert",
+  "description": "AI-powered test generation with coverage analysis, edge case detection, and mock creation",
+  "version": "1.0.0",
+  "author": "@arog",
+  
+  "config": {
+    "test_frameworks": ["jest", "mocha", "vitest"],
+    "coverage_target": 90,
+    "include_edge_cases": true,
+    "generate_mocks": true,
+    "test_types": ["unit", "integration", "e2e"]
+  },
+  
+  "execution": {
+    "command": "node",
+    "args": [".arog/skills/implementations/test-generator-pro.js"],
+    "timeout": 120000
+  },
+  
+  "ai_prompts": {
+    "unit_test": "Generate comprehensive unit tests for the following function. Include happy path, edge cases, error conditions, and boundary values.",
+    "integration_test": "Generate integration tests for the following module. Test component interactions, data flow, and API contracts.",
+    "mock_generation": "Generate mock data and fixtures for testing. Include realistic data, edge cases, and error scenarios."
+  },
+  
+  "output": {
+    "format": "files",
+    "structure": {
+      "test_files": "array",
+      "mock_files": "array",
+      "coverage_report": "object"
+    }
+  },
+  
+  "examples": [
+    {
+      "input": { 
+        "file": "src/calculator.js",
+        "test_type": "unit"
+      },
+      "output": {
+        "test_file": "tests/unit/calculator.test.js",
+        "tests_generated": 25,
+        "coverage": {
+          "statements": 100,
+          "branches": 95,
+          "functions": 100,
+          "lines": 100
+        }
+      }
+    }
+  ],
+  
+  "dependencies": ["@arog/test-generator", "jest", "faker"],
+  "tags": ["generation", "testing", "ai-powered", "coverage"]
+}
