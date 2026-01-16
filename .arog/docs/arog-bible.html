@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The AROG Story - Your Journey Begins</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #0f0f23;
+            --dark-card: #1a1a2e;
+            --light: #f8f9ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-6: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-7: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);
+            --gradient-8: linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%);
+            --gradient-9: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: var(--dark);
+            background-image: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Hero Section - Movie Opening */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(240, 147, 251, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(67, 233, 123, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.2) 0%, transparent 70%);
+            animation: meshFloat 15s ease-in-out infinite;
+        }
+
+        @keyframes meshFloat {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 20s linear infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+            max-width: 1200px;
+        }
+        
+        .hero-logo {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: fadeInScale 1.5s ease-out;
+        }
+        
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-subtitle {
+            font-size: 28px;
+            opacity: 0.95;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+        
+        .hero-tagline {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1.1s both;
+        }
+        
+        .cta-btn {
+            padding: 20px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-btn-primary {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .cta-btn-primary:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2);
+        }
+        
+        .cta-btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .cta-btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-5px);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .scroll-indicator:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-50%) scale(1.1);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 10px); }
+        }
+        
+        .scroll-indicator span {
+            font-size: 48px;
+            opacity: 0.8;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 35, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .nav.visible {
+            transform: translateY(0);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* 5W Cards Section */
+        .five-w-section {
+            padding: 100px 40px;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-card) 50%, var(--dark) 100%);
+        }
+
+        .five-w-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .five-w-intro {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .five-w-intro h2 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .five-w-intro p {
+            font-size: 22px;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .five-w-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+
+        @media (min-width: 1200px) {
+            .five-w-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            height: 450px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .flip-card-front {
+            background: var(--dark-card);
+            border: 1px solid var(--glass-border);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            transform: rotateY(180deg);
+            backdrop-filter: blur(10px);
+        }
+
+        .flip-card-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .flip-card-question {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .flip-card-hint {
+            font-size: 16px;
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        .flip-card-back h3 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back p {
+            font-size: 15px;
+            line-height: 1.5;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        .flip-card-back ul {
+            list-style: none;
+            margin-top: 10px;
+            text-align: left;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .flip-card-back ul::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .flip-card-back ul::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .flip-card-back ul::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .flip-card-back li {
+            padding: 6px 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .flip-card-back li:before {
+            content: '✓';
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* Gradient overlays for each card */
+        .flip-card:nth-child(1) .flip-card-back {
+            background: var(--gradient-1);
+        }
+
+        .flip-card:nth-child(2) .flip-card-back {
+            background: var(--gradient-2);
+        }
+
+        .flip-card:nth-child(3) .flip-card-back {
+            background: var(--gradient-3);
+        }
+
+        .flip-card:nth-child(4) .flip-card-back {
+            background: var(--gradient-4);
+        }
+
+        .flip-card:nth-child(5) .flip-card-back {
+            background: var(--gradient-5);
+        }
+
+        .flip-card:nth-child(6) .flip-card-back {
+            background: var(--gradient-6);
+        }
+
+        .flip-card:nth-child(7) .flip-card-back {
+            background: var(--gradient-7);
+        }
+
+        .flip-card:nth-child(8) .flip-card-back {
+            background: var(--gradient-8);
+        }
+
+        .flip-card:nth-child(9) .flip-card-back {
+            background: var(--gradient-9);
+        }
+
+        /* Chapter Sections */
+        .chapter {
+            min-height: 100vh;
+            padding: 120px 40px;
+            position: relative;
+            background: linear-gradient(180deg, transparent 0%, rgba(102, 126, 234, 0.02) 50%, transparent 100%);
+        }
+        
+        .chapter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .chapter-number {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .chapter-title {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .chapter-intro {
+            font-size: 22px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 60px;
+            max-width: 900px;
+        }
+        
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: var(--primary);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .feature-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+        
+        /* Code Examples */
+        .code-example {
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .code-label {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+        
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #f8f8f2;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+        }
+        
+        .code-comment {
+            color: #6272a4;
+        }
+        
+        .code-keyword {
+            color: #ff79c6;
+        }
+        
+        .code-string {
+            color: #f1fa8c;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 120px;
+            margin-bottom: 60px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 37px;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border: 4px solid var(--dark);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 40px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(102, 126, 234, 0.8); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(102, 126, 234, 1); }
+        }
+        
+        .timeline-content {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--primary);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 48px rgba(102, 126, 234, 0.3);
+        }
+        
+        .timeline-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        /* Stats Counter */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(102, 126, 234, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .stat-number {
+            font-size: 64px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Interactive Buttons */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .action-btn {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .action-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .action-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .action-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Background Alternating */
+        .chapter:nth-child(even) {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            padding: 60px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .footer-subtitle {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 48px; }
+            .hero-subtitle { font-size: 20px; }
+            .chapter-title { font-size: 36px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .timeline::before { left: 20px; }
+            .timeline-item { padding-left: 70px; }
+            .timeline-dot { left: 7px; }
+            .nav-links { display: none; }
+        }
+
+        /* Chapter 9: @arog Agent Capability Cards */
+        .capability-card-detailed {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .capability-card-detailed:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .capability-card-detailed h4 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .capability-card-detailed ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .capability-card-detailed li {
+            padding: 5px 0 5px 25px;
+            position: relative;
+        }
+        .capability-card-detailed li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <a href="#" class="nav-logo" style="text-decoration: none; color: inherit;">🤖 AROG</a>
+            <ul class="nav-links">
+                <li><a href="#start">Quick Start</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#automation">Automation</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#workflows">Workflows</a></li>
+                <li><a href="#installation">📦 Install</a></li>
+                <li><a href="#organization">🏢 Org Setup</a></li>
+                <li><a href="#arogAgent">🤖 @arog Agent</a></li>
+                <li><a href="#deploy">Deploy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-logo">🤖</div>
+            <h1>Welcome to AROG</h1>
+            <p class="hero-subtitle">Autonomous Robot for Organization Growth</p>
+            <p class="hero-tagline">
+                Your complete automation framework that works like magic. No configuration, no setup, no human intervention needed. 
+                Just pure robotic automation that handles testing, code quality, security, performance, and deployments automatically.
+            </p>
+            <div class="cta-buttons">
+                <a href="#start" class="cta-btn cta-btn-primary">🚀 Start Your Journey</a>
+                <a href="#features" class="cta-btn cta-btn-secondary">🎬 Watch the Story</a>
+            </div>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('start').scrollIntoView({behavior: 'smooth'})">
+            <span>⬇</span>
+        </div>
+    </section>
+
+    <!-- The 9 Fundamental Questions -->
+    <section id="five-w" class="five-w-section">
+        <div class="five-w-container">
+            <div class="five-w-intro fade-in">
+                <h2>The 9 Essential Questions</h2>
+                <p>Master AROG by understanding these fundamental questions. Hover over each card to discover the answers.</p>
+            </div>
+
+            <div class="five-w-grid">
+                <!-- What Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">🤔</div>
+                            <h3 class="flip-card-question">WHAT?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>What is AROG?</h3>
+                            <p>AROG is an <strong>Autonomous Robot for Organization Growth</strong> - a complete automation framework that handles:</p>
+                            <ul>
+                                <li>End-to-end testing (Playwright)</li>
+                                <li>Code quality checks (ESLint)</li>
+                                <li>Security scanning</li>
+                                <li>Performance monitoring</li>
+                                <li>Accessibility testing</li>
+                                <li>Automated deployments</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Why Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">💡</div>
+                            <h3 class="flip-card-question">WHY?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Why Use AROG?</h3>
+                            <p>Because manual testing and deployment is <strong>slow, error-prone, and boring</strong>. AROG gives you:</p>
+                            <ul>
+                                <li>Zero configuration setup</li>
+                                <li>100% automated workflows</li>
+                                <li>Instant quality feedback</li>
+                                <li>Team-wide consistency</li>
+                                <li>More time for coding</li>
+                                <li>Professional-grade automation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">⚙️</div>
+                            <h3 class="flip-card-question">HOW?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>How Does It Work?</h3>
+                            <p>AROG uses <strong>GitHub Actions</strong> to run automated workflows on every code change:</p>
+                            <ul>
+                                <li>Push code to GitHub</li>
+                                <li>Workflows trigger automatically</li>
+                                <li>Tests run in parallel</li>
+                                <li>Reports generated instantly</li>
+                                <li>Deployments happen on merge</li>
+                                <li>All without manual intervention</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Where Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">📍</div>
+                            <h3 class="flip-card-question">WHERE?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Where to Use It?</h3>
+                            <p>AROG runs <strong>anywhere GitHub Actions runs</strong>:</p>
+                            <ul>
+                                <li>GitHub cloud runners (free tier)</li>
+                                <li>Your private repositories</li>
+                                <li>Organization accounts</li>
+                                <li>Public open-source projects</li>
+                                <li>Multi-environment deployments</li>
+                                <li>Any modern web project</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Who Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">👥</div>
+                            <h3 class="flip-card-question">WHO?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Who Is It For?</h3>
+                            <p>AROG is perfect for:</p>
+                            <ul>
+                                <li>Frontend developers</li>
+                                <li>Full-stack engineers</li>
+                                <li>QA automation teams</li>
+                                <li>DevOps professionals</li>
+                                <li>Solo developers</li>
+                                <li>Anyone who values quality!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- When Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">⏰</div>
+                            <h3 class="flip-card-question">WHEN?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>When Does It Run?</h3>
+                            <p>AROG automates at <strong>every critical moment</strong>:</p>
+                            <ul>
+                                <li>On every git push</li>
+                                <li>On pull request creation</li>
+                                <li>On merge to main branch</li>
+                                <li>Daily security scans (2 AM UTC)</li>
+                                <li>On deployment triggers</li>
+                                <li>24/7 continuous monitoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Whom Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">🤝</div>
+                            <h3 class="flip-card-question">WHOM?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Whom Does It Help?</h3>
+                            <p>AROG benefits <strong>your entire team</strong>:</p>
+                            <ul>
+                                <li>Developers - Faster feedback</li>
+                                <li>QA Engineers - Automated testing</li>
+                                <li>Project Managers - Quality metrics</li>
+                                <li>Stakeholders - Confidence in releases</li>
+                                <li>End Users - Better quality products</li>
+                                <li>Future You - Maintainable code!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Which Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">🎯</div>
+                            <h3 class="flip-card-question">WHICH?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Which Technologies?</h3>
+                            <p>AROG uses <strong>industry-leading tools</strong>:</p>
+                            <ul>
+                                <li>Playwright for E2E testing</li>
+                                <li>Jest for unit testing</li>
+                                <li>ESLint for code quality</li>
+                                <li>GitHub Actions for CI/CD</li>
+                                <li>Lighthouse for performance</li>
+                                <li>TypeScript & Webpack builds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Whose Card -->
+                <div class="flip-card fade-in">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flip-card-icon">👑</div>
+                            <h3 class="flip-card-question">WHOSE?</h3>
+                            <p class="flip-card-hint">Hover to reveal...</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>Whose Responsibility?</h3>
+                            <p><strong>Everyone's, yet no one's!</strong></p>
+                            <ul>
+                                <li>Code ownership - Distributed</li>
+                                <li>Quality checks - Automated</li>
+                                <li>Deployments - Robotic</li>
+                                <li>Security scans - Scheduled</li>
+                                <li>Test maintenance - Shared</li>
+                                <li>You focus on features! 🚀</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 1: The Beginning -->
+    <section id="start" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 1</div>
+            <h2 class="chapter-title fade-in">Your Journey Starts Here</h2>
+            <p class="chapter-intro fade-in">
+                You've just opened AROG. You're standing at the beginning of something powerful. 
+                This isn't just another development tool – it's a complete automation ecosystem that runs itself. 
+                Let me show you where to begin...
+            </p>
+
+            <div class="stats fade-in">
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Automation Types</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">GitHub Workflows</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Automated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Config Needed</div>
+                </div>
+            </div>
+
+            <div class="code-example fade-in">
+                <div class="code-header">
+                    <span class="code-label">🎯 Your First Commands</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment"># Check if everything is ready</span>
+npm run arog:health
+
+<span class="code-comment"># Run all tests (15 tests, 100% coverage)</span>
+npm test
+
+<span class="code-comment"># Check code quality</span>
+npm run lint
+
+<span class="code-comment"># Build production bundle</span>
+npm run build
+
+<span class="code-comment"># That's it! Everything else runs automatically! 🎉</span></pre>
+                </div>
+            </div>
+
+            <div class="timeline fade-in">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">✅ Step 1: Verify Installation</div>
+                        <div class="timeline-desc">
+                            Run <code>npm run arog:health</code> to verify Node.js, npm, Git, and all required files are present.
+                            This is your system health check.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🧪 Step 2: Run Your First Tests</div>
+                        <div class="timeline-desc">
+                            Run <code>npm test</code> to see 15 unit tests pass with 100% coverage. 
+                            This proves everything is working perfectly.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🎨 Step 3: Explore the Code</div>
+                        <div class="timeline-desc">
+                            Open <code>src/utils/calculator.js</code> and <code>tests/unit/calculator.test.js</code> 
+                            to see example code with perfect test coverage.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🤖 Step 4: Talk to AROG</div>
+                        <div class="timeline-desc">
+                            Open VS Code Chat and ask: "What's the status of AROG?" 
+                            The SKILLS system will respond automatically!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 2: The Power Within -->
+    <section id="features" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 2</div>
+            <h2 class="chapter-title fade-in">The 10 Powers of AROG</h2>
+            <p class="chapter-intro fade-in">
+                AROG isn't just one tool – it's 10 powerful automation systems working together. 
+                Each one runs automatically, protecting your code, catching bugs, and ensuring quality. 
+                You don't activate them. They're already running.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🧪</div>
+                    <div class="feature-title">1. Unit Testing</div>
+                    <div class="feature-desc">
+                        Jest runs automatically on every push. 15 example tests included. 
+                        100% coverage enforced. Fails if coverage drops below 70%.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">✨</div>
+                    <div class="feature-title">2. Code Quality</div>
+                    <div class="feature-desc">
+                        ESLint + Prettier format and check code on every commit. 
+                        Enforces best practices. Auto-fixes issues when possible.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">3. AI Code Review</div>
+                    <div class="feature-desc">
+                        AI analyzes every PR for bugs, security issues, and improvements. 
+                        Posts review comments automatically.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-title">4. E2E Testing</div>
+                    <div class="feature-desc">
+                        Playwright tests in 5 browsers (Chrome, Firefox, Safari, Mobile). 
+                        Runs on every PR automatically.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">5. Security Scanning</div>
+                    <div class="feature-desc">
+                        Daily npm audit + secret detection. Catches vulnerabilities 
+                        and leaked credentials before they reach production.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">6. Performance Testing</div>
+                    <div class="feature-desc">
+                        Lighthouse CI runs on every PR. Monitors bundle size. 
+                        Fails if bundle exceeds 500KB.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏗️</div>
+                    <div class="feature-title">7. Build Validation</div>
+                    <div class="feature-desc">
+                        TypeScript + Webpack build on every push. Catches compile 
+                        errors before merge.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">8. PR Complexity</div>
+                    <div class="feature-desc">
+                        Analyzes PR size and complexity. Posts score and suggests 
+                        splitting large PRs.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">♿</div>
+                    <div class="feature-title">9. Accessibility</div>
+                    <div class="feature-desc">
+                        axe-core tests for WCAG compliance. Catches accessibility 
+                        issues automatically.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-title">10. Documentation</div>
+                    <div class="feature-desc">
+                        6 interactive HTML guides. Complete API reference. 
+                        Context sharing for teams.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 3: The Magic Commands -->
+    <section id="automation" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 3</div>
+            <h2 class="chapter-title fade-in">The 22 Magic Commands</h2>
+            <p class="chapter-intro fade-in">
+                Every power at your fingertips. These npm scripts control everything. 
+                Copy, paste, and watch the magic happen.
+            </p>
+
+            <div class="action-grid fade-in">
+                <div class="action-btn" onclick="showCommand('test')">
+                    <div class="action-icon">🧪</div>
+                    <div class="action-title">npm test</div>
+                    <div class="action-subtitle">Run all unit tests</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('lint')">
+                    <div class="action-icon">✨</div>
+                    <div class="action-title">npm run lint</div>
+                    <div class="action-subtitle">Check code quality</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('build')">
+                    <div class="action-icon">🏗️</div>
+                    <div class="action-title">npm run build</div>
+                    <div class="action-subtitle">Build production</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('e2e')">
+                    <div class="action-icon">🌐</div>
+                    <div class="action-title">npm run e2e</div>
+                    <div class="action-subtitle">E2E tests (headless)</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('security')">
+                    <div class="action-icon">🛡️</div>
+                    <div class="action-title">npm run security</div>
+                    <div class="action-subtitle">Security audit</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('perf')">
+                    <div class="action-icon">⚡</div>
+                    <div class="action-title">npm run perf</div>
+                    <div class="action-subtitle">Performance tests</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('health')">
+                    <div class="action-icon">❤️</div>
+                    <div class="action-title">npm run arog:health</div>
+                    <div class="action-subtitle">System health check</div>
+                </div>
+
+                <div class="action-btn" onclick="showCommand('validate')">
+                    <div class="action-icon">✅</div>
+                    <div class="action-title">npm run arog:validate</div>
+                    <div class="action-subtitle">Full validation</div>
+                </div>
+            </div>
+
+            <div id="command-details" class="code-example fade-in" style="display: none;">
+                <div class="code-header">
+                    <span class="code-label" id="command-label">Command Details</span>
+                    <button class="copy-btn" onclick="copyCommandCode()">Copy</button>
+                </div>
+                <div class="code-content">
+                    <pre id="command-code"></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 4: The Skills -->
+    <section id="skills" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 4</div>
+            <h2 class="chapter-title fade-in">The 3 SKILLS of AROG</h2>
+            <p class="chapter-intro fade-in">
+                AROG understands you. Ask questions in natural language. 
+                The SKILLS system responds instantly with context-aware help.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">arog-overview</div>
+                    <div class="feature-desc">
+                        <strong>Ask:</strong> "What's the status of AROG?"<br>
+                        <strong>Get:</strong> System health, test results, coverage stats, 
+                        workflow status, and quick diagnostics.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔧</div>
+                    <div class="feature-title">arog-troubleshooting</div>
+                    <div class="feature-desc">
+                        <strong>Ask:</strong> "Why is this test failing?"<br>
+                        <strong>Get:</strong> Debug guidance, common issues, 
+                        fixes, and step-by-step troubleshooting.
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-title">arog-customize</div>
+                    <div class="feature-desc">
+                        <strong>Ask:</strong> "How do I change ESLint rules?"<br>
+                        <strong>Get:</strong> Configuration examples, 
+                        file locations, and customization guides.
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-example fade-in">
+                <div class="code-header">
+                    <span class="code-label">💬 Try These Questions in VS Code Chat</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment"># System Status</span>
+"What's the status of AROG?"
+"Show me test coverage"
+"Are all workflows passing?"
+
+<span class="code-comment"># Troubleshooting</span>
+"Why is this test failing?"
+"How do I fix linting errors?"
+"Debug this E2E test"
+
+<span class="code-comment"># Customization</span>
+"How do I customize ESLint?"
+"Change TypeScript config"
+"Add a new test suite"
+
+<span class="code-comment"># The SKILLS will respond automatically!</span></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 5: The Workflows -->
+    <section id="workflows" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 5</div>
+            <h2 class="chapter-title fade-in">The 8 Automated Workflows</h2>
+            <p class="chapter-intro fade-in">
+                When you push to GitHub, these 8 workflows spring to life. 
+                They run in parallel, checking everything, catching issues, 
+                and protecting your codebase. You do nothing. They do everything.
+            </p>
+
+            <div class="timeline fade-in">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🧪 Unit Tests Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every push, every PR<br>
+                            <strong>Runs:</strong> Jest with coverage reporting<br>
+                            <strong>Fails if:</strong> Tests fail or coverage < 70%<br>
+                            <strong>File:</strong> .github/workflows/arog-unit-tests.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">✨ Code Quality Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every push, every PR<br>
+                            <strong>Runs:</strong> ESLint + Prettier checks<br>
+                            <strong>Fails if:</strong> Linting errors found<br>
+                            <strong>File:</strong> .github/workflows/arog-code-quality.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🔍 AI Code Review Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every PR<br>
+                            <strong>Runs:</strong> AI analysis of code changes<br>
+                            <strong>Posts:</strong> Review comments with suggestions<br>
+                            <strong>File:</strong> .github/workflows/arog-code-review.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🌐 E2E Tests Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every PR<br>
+                            <strong>Runs:</strong> Playwright in 5 browsers + accessibility<br>
+                            <strong>Fails if:</strong> Any browser fails or a11y issues<br>
+                            <strong>File:</strong> .github/workflows/arog-e2e-tests.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🛡️ Security Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every push + Daily at 2 AM UTC<br>
+                            <strong>Runs:</strong> npm audit + secret scanning<br>
+                            <strong>Fails if:</strong> High/critical vulnerabilities or secrets found<br>
+                            <strong>File:</strong> .github/workflows/arog-security.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">⚡ Performance Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every PR<br>
+                            <strong>Runs:</strong> Lighthouse CI + bundle size check<br>
+                            <strong>Fails if:</strong> Performance score < 90 or bundle > 500KB<br>
+                            <strong>File:</strong> .github/workflows/arog-performance.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🏗️ Build Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every push, every PR<br>
+                            <strong>Runs:</strong> TypeScript + Webpack build<br>
+                            <strong>Fails if:</strong> Compile errors or build fails<br>
+                            <strong>File:</strong> .github/workflows/arog-build.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">📊 PR Review Workflow</div>
+                        <div class="timeline-desc">
+                            <strong>Triggers:</strong> Every PR<br>
+                            <strong>Runs:</strong> PR complexity analysis<br>
+                            <strong>Posts:</strong> Complexity score and suggestions<br>
+                            <strong>File:</strong> .github/workflows/arog-pr-review.yml
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 6: Installation Guide -->
+    <section id="installation" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 6</div>
+            <h2 class="chapter-title fade-in">📦 Installing AROG in Your Project</h2>
+            <p class="chapter-intro fade-in">
+                Three simple ways to add AROG to any project. Choose your method and be ready in 5 minutes.
+            </p>
+
+            <!-- Installation Method Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin: 60px 0;">
+                
+                <!-- Method 1: NPM Package -->
+                <div class="feature-card fade-in" style="background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(56, 249, 215, 0.1));">
+                    <div class="feature-icon">📦</div>
+                    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 15px;">NPM Package</h3>
+                    <p style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Coming Soon - Easiest method</p>
+                    <div class="code-example" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 20px; margin: 15px 0;">
+                        <pre style="font-size: 13px; line-height: 1.6; color: #a8edea;"><span style="color: #10b981;"># Install AROG</span>
+npm install @arogyareddy/arog --save-dev
+
+<span style="color: #10b981;"># Run setup wizard</span>
+npx arog setup
+
+<span style="color: #10b981;"># Verify installation</span>
+npx arog health-check</pre>
+                    </div>
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 3px solid #10b981;">
+                        <strong style="color: #10b981;">Benefits:</strong> Automatic updates, global CLI, version control
+                    </div>
+                </div>
+
+                <!-- Method 2: Git Submodule -->
+                <div class="feature-card fade-in" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));">
+                    <div class="feature-icon">🔗</div>
+                    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 15px;">Git Submodule</h3>
+                    <p style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">✅ Available Now - Best for teams</p>
+                    <div class="code-example" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 20px; margin: 15px 0;">
+                        <pre style="font-size: 13px; line-height: 1.6; color: #a8edea;"><span style="color: #667eea;"># Add AROG to your project</span>
+git submodule add \\
+  https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #667eea;"># Install dependencies</span>
+cd .arog && npm install && cd ..
+
+<span style="color: #667eea;"># Add scripts to package.json</span>
+npm pkg set scripts.arog:health=\\
+  "node .arog/scripts/health-check.js"
+
+<span style="color: #667eea;"># Test it works</span>
+npm run arog:health</pre>
+                    </div>
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(102, 126, 234, 0.1); border-radius: 8px; border-left: 3px solid #667eea;">
+                        <strong style="color: #667eea;">Benefits:</strong> Free, version-controlled, team-friendly
+                    </div>
+                </div>
+
+                <!-- Method 3: Clone Directly -->
+                <div class="feature-card fade-in" style="background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1));">
+                    <div class="feature-icon">📥</div>
+                    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 15px;">Clone Directly</h3>
+                    <p style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Quick & Simple</p>
+                    <div class="code-example" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 20px; margin: 15px 0;">
+                        <pre style="font-size: 13px; line-height: 1.6; color: #a8edea;"><span style="color: #f093fb;"># Clone into your project</span>
+git clone \\
+  https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #f093fb;"># Install dependencies</span>
+cd .arog && npm install && cd ..
+
+<span style="color: #f093fb;"># Add to your package.json scripts</span>
+npm pkg set scripts.arog:test=\\
+  "npm run --prefix .arog test"</pre>
+                    </div>
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(240, 147, 251, 0.1); border-radius: 8px; border-left: 3px solid #f093fb;">
+                        <strong style="color: #f093fb;">Benefits:</strong> Simple, no submodule complexity
+                    </div>
+                </div>
+            </div>
+
+            <!-- After Installation Steps -->
+            <div class="code-example fade-in" style="margin: 60px 0;">
+                <div class="code-header">
+                    <span class="code-label">✅ After Installation - 4 Quick Steps</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment"># 1. Run Health Check</span>
+npm run arog:health
+<span class="code-keyword">✅</span> Verifies: Node.js, npm, Git, AROG files, dependencies
+
+<span class="code-comment"># 2. Run Your First Test</span>
+npm run arog:test
+<span class="code-keyword">✅</span> Validates: Test suite, E2E tests, accessibility
+
+<span class="code-comment"># 3. Open AROG Bible</span>
+<span class="code-comment"># macOS:</span> open .arog/docs/arog-bible.html
+<span class="code-comment"># Linux:</span> xdg-open .arog/docs/arog-bible.html
+<span class="code-comment"># Windows:</span> start .arog\\docs\\arog-bible.html
+
+<span class="code-comment"># 4. Set up GitHub Actions (automatic)</span>
+git add .github/workflows/arog.yml
+git commit -m "Add AROG automation"
+git push
+<span class="code-keyword">✅</span> CI/CD pipeline activated!</pre>
+                </div>
+            </div>
+
+            <!-- Team Setup Guide -->
+            <div style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1)); padding: 40px; border-radius: 20px; margin: 60px 0;" class="fade-in">
+                <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 25px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    👥 Team Member Onboarding
+                </h3>
+                <p style="font-size: 18px; opacity: 0.9; margin-bottom: 30px; line-height: 1.6;">
+                    When team members join your project, they get AROG automatically:
+                </p>
+                <div class="code-example" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 25px;">
+<pre style="font-size: 14px; line-height: 1.8;"><span style="color: #4facfe;"># For Git Submodule method:</span>
+git clone --recurse-submodules https://github.com/YOUR-ORG/project.git
+cd project
+cd .arog && npm install && cd ..
+npm run arog:health
+
+<span style="color: #10b981;">✅ That's it! Zero configuration needed.</span>
+<span style="color: #10b981;">✅ All automation works immediately.</span>
+<span style="color: #10b981;">✅ Same AROG version as everyone else.</span></pre>
+                </div>
+            </div>
+
+            <!-- Available Commands Reference -->
+            <h3 style="font-size: 36px; font-weight: 900; margin: 80px 0 40px; text-align: center; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="fade-in">
+                🛠️ Available Commands
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 40px 0;">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">❤️</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Health Check</h4>
+                    <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 13px; margin: 10px 0;">npm run arog:health</code>
+                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Verify system requirements</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🧪</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Run Tests</h4>
+                    <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 13px; margin: 10px 0;">npm run arog:test</code>
+                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Execute full test suite</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">✨</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Code Quality</h4>
+                    <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 13px; margin: 10px 0;">npm run arog:lint</code>
+                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Check code quality</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔒</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Security Scan</h4>
+                    <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 13px; margin: 10px 0;">npm run arog:security</code>
+                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Find vulnerabilities</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚙️</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Setup Wizard</h4>
+                    <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 13px; margin: 10px 0;">npx arog setup</code>
+                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Initialize in project</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">✅</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Full Validation</h4>
+                    <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 13px; margin: 10px 0;">npx arog validate</code>
+                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Complete system check</p>
+                </div>
+            </div>
+
+            <!-- Integration Examples -->
+            <h3 style="font-size: 36px; font-weight: 900; margin: 80px 0 40px; text-align: center; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="fade-in">
+                🎯 Integration Examples
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin: 40px 0;">
+                <!-- React Project -->
+                <div class="fade-in" style="background: linear-gradient(135deg, rgba(97, 218, 251, 0.1), rgba(125, 86, 253, 0.1)); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #61dafb;">⚛️ React Project</h4>
+                    <div class="code-example" style="background: rgba(0,0,0,0.4); border-radius: 12px; padding: 20px;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;">{
+  "scripts": {
+    "dev": "react-scripts start",
+    "test": <span style="color: #43e97b;">"arog test"</span>,
+    "lint": <span style="color: #43e97b;">"arog lint"</span>,
+    "prebuild": <span style="color: #43e97b;">"arog validate"</span>
+  }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Node.js API -->
+                <div class="fade-in" style="background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(56, 249, 215, 0.1)); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #43e97b;">🟢 Node.js API</h4>
+                    <div class="code-example" style="background: rgba(0,0,0,0.4); border-radius: 12px; padding: 20px;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;">{
+  "scripts": {
+    "start": "node server.js",
+    "test": <span style="color: #43e97b;">"arog test"</span>,
+    "prestart": <span style="color: #43e97b;">"arog health-check"</span>,
+    "predeploy": <span style="color: #43e97b;">"arog validate"</span>
+  }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Full-Stack App -->
+                <div class="fade-in" style="background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1)); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #f093fb;">🚀 Full-Stack App</h4>
+                    <div class="code-example" style="background: rgba(0,0,0,0.4); border-radius: 12px; padding: 20px;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;">{
+  "scripts": {
+    "dev": "concurrently ...",
+    "test": <span style="color: #f093fb;">"arog test"</span>,
+    "test:e2e": <span style="color: #f093fb;">"arog test:e2e"</span>,
+    "lint": <span style="color: #f093fb;">"arog lint"</span>,
+    "security": <span style="color: #f093fb;">"arog security"</span>,
+    "validate": <span style="color: #f093fb;">"arog validate"</span>,
+    "predeploy": <span style="color: #f093fb;">"arog validate"</span>
+  }
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.1)); padding: 40px; border-radius: 20px; margin: 60px 0; border: 2px solid rgba(245, 158, 11, 0.2);" class="fade-in">
+                <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 30px; color: #f59e0b;">
+                    🔧 Troubleshooting
+                </h3>
+                <div style="display: grid; gap: 20px;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #fbbf24;">❌ AROG command not found</h4>
+                        <pre style="font-size: 13px; line-height: 1.6; opacity: 0.9;"><span style="color: #10b981;"># Make sure AROG is installed</span>
+npm install @arogyareddy/arog --save-dev
+
+<span style="color: #10b981;"># OR use npx</span>
+npx arog health-check</pre>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #fbbf24;">❌ Submodule not initialized</h4>
+                        <pre style="font-size: 13px; line-height: 1.6; opacity: 0.9;"><span style="color: #10b981;"># Initialize submodules</span>
+git submodule update --init --recursive
+cd .arog && npm install</pre>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #fbbf24;">❌ Permission denied</h4>
+                        <pre style="font-size: 13px; line-height: 1.6; opacity: 0.9;"><span style="color: #10b981;"># Make scripts executable</span>
+chmod +x .arog/bin/arog.js
+chmod +x .arog/scripts/*.js</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Next Steps CTA -->
+            <div style="text-align: center; margin: 80px 0; padding: 60px 40px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 24px; border: 2px solid rgba(102, 126, 234, 0.3);" class="fade-in">
+                <h3 style="font-size: 42px; font-weight: 900; margin-bottom: 25px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    🎉 Installation Complete!
+                </h3>
+                <p style="font-size: 20px; opacity: 0.9; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                    AROG is installed and ready. Now let's deploy it across your entire organization...
+                </p>
+                <a href="#organization" style="display: inline-block; padding: 18px 48px; background: var(--gradient-1); color: white; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 18px; transition: all 0.3s; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 40px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.3)'">
+                    Continue to Organization Setup →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 7: Organization-Wide Deployment -->
+    <section id="organization" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 7</div>
+            <h2 class="chapter-title fade-in">🏢 Deploy AROG Across Your Organization</h2>
+            <p class="chapter-intro fade-in">
+                Share AROG with your entire team. Four powerful methods to choose from. 
+                Pick the one that fits your organization's size and needs.
+            </p>
+
+            <!-- 4 Distribution Methods -->
+            <h3 style="font-size: 36px; font-weight: 900; margin: 80px 0 40px; text-align: center; background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="fade-in">
+                📦 Choose Your Distribution Method
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 60px 0;">
+                
+                <!-- Method 1: NPM Package -->
+                <div class="fade-in" style="position: relative; background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(56, 249, 215, 0.1)); padding: 35px; border-radius: 20px; border: 2px solid rgba(67, 233, 123, 0.3); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.borderColor='rgba(67, 233, 123, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(67, 233, 123, 0.3)'">
+                    <div style="position: absolute; top: 20px; right: 20px; background: #10b981; color: white; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700;">RECOMMENDED</div>
+                    <div style="font-size: 56px; margin-bottom: 20px;">📦</div>
+                    <h4 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #10b981;">NPM Package</h4>
+                    <p style="opacity: 0.9; margin-bottom: 20px; line-height: 1.6;">Publish AROG as an npm package. Teams install with one command.</p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin: 20px 0;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;"><span style="color: #10b981;"># In any project:</span>
+npm install @your-org/arog --save-dev
+
+<span style="color: #10b981;"># Use immediately:</span>
+npx arog health-check
+npx arog test</pre>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 10px;">
+                        <strong style="color: #10b981;">✅ Best for:</strong><br>
+                        <span style="opacity: 0.9; font-size: 14px;">All team sizes • Automatic updates • Version control</span>
+                    </div>
+                </div>
+
+                <!-- Method 2: Git Submodule -->
+                <div class="fade-in" style="position: relative; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 35px; border-radius: 20px; border: 2px solid rgba(102, 126, 234, 0.3); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.borderColor='rgba(102, 126, 234, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(102, 126, 234, 0.3)'">
+                    <div style="position: absolute; top: 20px; right: 20px; background: #667eea; color: white; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700;">FREE & SIMPLE</div>
+                    <div style="font-size: 56px; margin-bottom: 20px;">🔗</div>
+                    <h4 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #667eea;">Git Submodule</h4>
+                    <p style="opacity: 0.9; margin-bottom: 20px; line-height: 1.6;">Keep AROG in sync across all repositories. Free and version-controlled.</p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin: 20px 0;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;"><span style="color: #667eea;"># Add to any project:</span>
+git submodule add \\
+  https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #667eea;"># Team clones with:</span>
+git clone --recurse-submodules &lt;repo&gt;</pre>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 10px;">
+                        <strong style="color: #667eea;">✅ Best for:</strong><br>
+                        <span style="opacity: 0.9; font-size: 14px;">Small-medium teams • Open source • No cost</span>
+                    </div>
+                </div>
+
+                <!-- Method 3: GitHub Template -->
+                <div class="fade-in" style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1)); padding: 35px; border-radius: 20px; border: 2px solid rgba(79, 172, 254, 0.3); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.borderColor='rgba(79, 172, 254, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(79, 172, 254, 0.3)'">
+                    <div style="font-size: 56px; margin-bottom: 20px;">🎯</div>
+                    <h4 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #4facfe;">GitHub Template</h4>
+                    <p style="opacity: 0.9; margin-bottom: 20px; line-height: 1.6;">Start new projects with AROG pre-installed. One-click setup.</p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin: 20px 0;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;"><span style="color: #4facfe;"># Create from template:</span>
+gh repo create my-project \\
+  --template ArogyaReddy/arog
+
+<span style="color: #4facfe;"># Or use GitHub UI</span>
+"Use this template" button</pre>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(79, 172, 254, 0.1); border-radius: 10px;">
+                        <strong style="color: #4facfe;">✅ Best for:</strong><br>
+                        <span style="opacity: 0.9; font-size: 14px;">New projects • Quick starts • Standardization</span>
+                    </div>
+                </div>
+
+                <!-- Method 4: Shared GitHub Actions -->
+                <div class="fade-in" style="background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1)); padding: 35px; border-radius: 20px; border: 2px solid rgba(240, 147, 251, 0.3); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.borderColor='rgba(240, 147, 251, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(240, 147, 251, 0.3)'">
+                    <div style="font-size: 56px; margin-bottom: 20px;">⚙️</div>
+                    <h4 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #f093fb;">Shared Workflows</h4>
+                    <p style="opacity: 0.9; margin-bottom: 20px; line-height: 1.6;">Centralize CI/CD workflows. Update once, apply everywhere.</p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin: 20px 0;">
+<pre style="font-size: 13px; line-height: 1.7; color: #a8edea;"><span style="color: #f093fb;"># In .github/workflows/ci.yml:</span>
+jobs:
+  arog:
+    uses: ArogyaReddy/arog/
+      .github/workflows/test.yml@main</pre>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(240, 147, 251, 0.1); border-radius: 10px;">
+                        <strong style="color: #f093fb;">✅ Best for:</strong><br>
+                        <span style="opacity: 0.9; font-size: 14px;">Large enterprises • Centralized control • Compliance</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <h3 style="font-size: 36px; font-weight: 900; margin: 100px 0 40px; text-align: center; background: var(--gradient-4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="fade-in">
+                📊 Which Method Should You Choose?
+            </h3>
+
+            <div class="fade-in" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); overflow-x: auto; margin: 40px 0;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid rgba(255,255,255,0.2);">
+                            <th style="padding: 15px; text-align: left; font-size: 16px; font-weight: 700;">Method</th>
+                            <th style="padding: 15px; text-align: center; font-size: 16px; font-weight: 700;">Setup Time</th>
+                            <th style="padding: 15px; text-align: center; font-size: 16px; font-weight: 700;">Cost</th>
+                            <th style="padding: 15px; text-align: center; font-size: 16px; font-weight: 700;">Updates</th>
+                            <th style="padding: 15px; text-align: center; font-size: 16px; font-weight: 700;">Team Size</th>
+                            <th style="padding: 15px; text-align: center; font-size: 16px; font-weight: 700;">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 15px;"><strong style="color: #10b981;">NPM Package</strong></td>
+                            <td style="padding: 15px; text-align: center;">2 min</td>
+                            <td style="padding: 15px; text-align: center;">Free</td>
+                            <td style="padding: 15px; text-align: center;"><span style="color: #10b981;">Automatic</span></td>
+                            <td style="padding: 15px; text-align: center;">Any</td>
+                            <td style="padding: 15px; text-align: center;">⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 15px;"><strong style="color: #667eea;">Git Submodule</strong></td>
+                            <td style="padding: 15px; text-align: center;">5 min</td>
+                            <td style="padding: 15px; text-align: center;">Free</td>
+                            <td style="padding: 15px; text-align: center;"><span style="color: #f59e0b;">Manual</span></td>
+                            <td style="padding: 15px; text-align: center;">2-50</td>
+                            <td style="padding: 15px; text-align: center;">⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 15px;"><strong style="color: #4facfe;">GitHub Template</strong></td>
+                            <td style="padding: 15px; text-align: center;">1 min</td>
+                            <td style="padding: 15px; text-align: center;">Free</td>
+                            <td style="padding: 15px; text-align: center;"><span style="color: #f59e0b;">Manual</span></td>
+                            <td style="padding: 15px; text-align: center;">Any</td>
+                            <td style="padding: 15px; text-align: center;">⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px;"><strong style="color: #f093fb;">Shared Actions</strong></td>
+                            <td style="padding: 15px; text-align: center;">10 min</td>
+                            <td style="padding: 15px; text-align: center;">Free</td>
+                            <td style="padding: 15px; text-align: center;"><span style="color: #10b981;">Centralized</span></td>
+                            <td style="padding: 15px; text-align: center;">50+</td>
+                            <td style="padding: 15px; text-align: center;">⭐⭐⭐⭐</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Recommended Setup by Team Size -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 80px 0;">
+                <div class="feature-card fade-in" style="background: linear-gradient(135deg, rgba(250, 112, 154, 0.1), rgba(254, 225, 64, 0.1));">
+                    <div class="feature-icon" style="font-size: 48px;">👥</div>
+                    <h4 style="font-size: 20px; font-weight: 800; margin: 15px 0;">Small Teams (2-10)</h4>
+                    <p style="opacity: 0.9; margin-bottom: 15px; font-size: 14px;">Start simple, grow later</p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <strong style="color: #667eea;">→ Use Git Submodule</strong><br>
+                        <span style="opacity: 0.8; font-size: 13px;">Free, simple, version-controlled</span>
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in" style="background: linear-gradient(135deg, rgba(168, 237, 234, 0.1), rgba(254, 214, 227, 0.1));">
+                    <div class="feature-icon" style="font-size: 48px;">👥👥</div>
+                    <h4 style="font-size: 20px; font-weight: 800; margin: 15px 0;">Medium Teams (10-50)</h4>
+                    <p style="opacity: 0.9; margin-bottom: 15px; font-size: 14px;">Balance ease and control</p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <strong style="color: #10b981;">→ Use NPM Package</strong><br>
+                        <span style="opacity: 0.8; font-size: 13px;">Easy updates, automatic versions</span>
+                    </div>
+                </div>
+
+                <div class="feature-card fade-in" style="background: linear-gradient(135deg, rgba(255, 154, 86, 0.1), rgba(255, 106, 136, 0.1));">
+                    <div class="feature-icon" style="font-size: 48px;">🏢</div>
+                    <h4 style="font-size: 20px; font-weight: 800; margin: 15px 0;">Large Orgs (50+)</h4>
+                    <p style="opacity: 0.9; margin-bottom: 15px; font-size: 14px;">Enterprise-grade control</p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <strong style="color: #f093fb;">→ Use NPM + Actions</strong><br>
+                        <span style="opacity: 0.8; font-size: 13px;">Centralized, scalable, compliant</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Examples -->
+            <h3 style="font-size: 36px; font-weight: 900; margin: 100px 0 40px; text-align: center; background: var(--gradient-5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="fade-in">
+                🌟 Real-World Deployment Examples
+            </h3>
+
+            <!-- Example 1: Startup -->
+            <div class="fade-in" style="background: linear-gradient(135deg, rgba(67, 233, 123, 0.05), rgba(56, 249, 215, 0.05)); padding: 40px; border-radius: 20px; margin: 40px 0; border: 2px solid rgba(67, 233, 123, 0.2);">
+                <h4 style="font-size: 28px; font-weight: 800; margin-bottom: 25px; color: #10b981;">🚀 Startup with 5 Repositories</h4>
+                <p style="opacity: 0.9; margin-bottom: 25px; line-height: 1.6;">Add AROG to all projects using Git Submodule. Same version everywhere.</p>
+                <div class="code-example" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 25px;">
+<pre style="font-size: 14px; line-height: 1.8;"><span style="color: #10b981;"># Project: web-app</span>
+cd web-app
+git submodule add https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #10b981;"># Project: mobile-api</span>
+cd ../mobile-api
+git submodule add https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #10b981;"># Project: admin-dashboard</span>
+cd ../admin-dashboard
+git submodule add https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #10b981;"># Project: analytics-service</span>
+cd ../analytics-service
+git submodule add https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #10b981;"># Project: auth-service</span>
+cd ../auth-service
+git submodule add https://github.com/ArogyaReddy/arog.git .arog
+
+<span style="color: #43e97b;">✅ All 5 projects now have the same AROG version!</span>
+<span style="color: #43e97b;">✅ Update all at once when needed</span></pre>
+                </div>
+            </div>
+
+            <!-- Example 2: Enterprise -->
+            <div class="fade-in" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); padding: 40px; border-radius: 20px; margin: 40px 0; border: 2px solid rgba(102, 126, 234, 0.2);">
+                <h4 style="font-size: 28px; font-weight: 800; margin-bottom: 25px; color: #667eea;">🏢 Enterprise with Custom Requirements</h4>
+                <p style="opacity: 0.9; margin-bottom: 25px; line-height: 1.6;">Fork AROG, customize for your organization, share via private npm.</p>
+                <div class="code-example" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 25px;">
+<pre style="font-size: 14px; line-height: 1.8;"><span style="color: #667eea;"># 1. Fork to private org</span>
+git clone https://github.com/YOUR-ORG/arog.git
+cd arog
+
+<span style="color: #667eea;"># 2. Add enterprise agents</span>
+mkdir bots/agents/enterprise
+cp my-custom-agent.md bots/agents/enterprise/
+
+<span style="color: #667eea;"># 3. Add company-specific workflows</span>
+cp company-deploy.yml bots/workflows/
+
+<span style="color: #667eea;"># 4. Add compliance checks</span>
+cp compliance-check.js scripts/
+
+<span style="color: #667eea;"># 5. Publish to private npm</span>
+npm publish --access restricted
+
+<span style="color: #667eea;"># 6. Use in all company projects:</span>
+npm install @your-org/arog --save-dev
+
+<span style="color: #667eea;">✅ Customized for your organization</span>
+<span style="color: #667eea;">✅ All teams use the same standards</span></pre>
+                </div>
+            </div>
+
+            <!-- Team Onboarding -->
+            <div style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1)); padding: 50px; border-radius: 24px; margin: 80px 0; border: 3px solid rgba(79, 172, 254, 0.3);" class="fade-in">
+                <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 30px; text-align: center; color: #4facfe;">
+                    👨‍💻 Team Member Onboarding
+                </h3>
+                <p style="font-size: 18px; opacity: 0.9; text-align: center; margin-bottom: 40px; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    When new team members join, they get AROG automatically. Zero configuration needed.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 40px;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 16px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">1️⃣</div>
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #4facfe;">Clone with Submodules</h4>
+                        <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 12px; margin-top: 15px;">git clone --recurse-submodules &lt;repo&gt;</code>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 16px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">2️⃣</div>
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #4facfe;">Install Dependencies</h4>
+                        <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 12px; margin-top: 15px;">cd .arog && npm install</code>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 16px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">3️⃣</div>
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #4facfe;">Verify Setup</h4>
+                        <code style="display: block; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-size: 12px; margin-top: 15px;">npm run arog:health</code>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 16px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #10b981;">Ready to Code!</h4>
+                        <p style="opacity: 0.8; font-size: 13px; margin-top: 15px;">All automation works<br>No configuration needed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final CTA -->
+            <div style="text-align: center; margin: 100px 0; padding: 70px 50px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 28px; border: 3px solid rgba(102, 126, 234, 0.4);" class="fade-in">
+                <h3 style="font-size: 48px; font-weight: 900; margin-bottom: 30px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    🎯 Organization Setup Complete!
+                </h3>
+                <p style="font-size: 22px; opacity: 0.95; margin-bottom: 45px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.7;">
+                    AROG is ready to deploy across your entire organization. Choose your method and start automating!
+                </p>
+                <a href="#deploy" style="display: inline-block; padding: 20px 60px; background: var(--gradient-1); color: white; text-decoration: none; border-radius: 50px; font-weight: 800; font-size: 20px; transition: all 0.3s; box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 20px 50px rgba(102, 126, 234, 0.5)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 15px 40px rgba(102, 126, 234, 0.4)'">
+                    Ready to Share with Your Team →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 8: Deployment -->
+    <section id="deploy" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 8</div>
+            <h2 class="chapter-title fade-in">Share AROG with Your Team</h2>
+            <p class="chapter-intro fade-in">
+                AROG is ready to share. Your team needs zero configuration. 
+                They clone, install, and everything works. Here's how...
+            </p>
+
+            <div class="code-example fade-in">
+                <div class="code-header">
+                    <span class="code-label">🚀 Step 1: Push to GitHub</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment"># Create repository on GitHub.com first, then:</span>
+git remote add origin https://github.com/YourOrg/AROG.git
+git branch -M main
+git push -u origin main</pre>
+                </div>
+            </div>
+
+            <div class="code-example fade-in">
+                <div class="code-header">
+                    <span class="code-label">⚙️ Step 2: Enable GitHub Actions</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment"># On GitHub.com:</span>
+1. Go to: Repository → Settings → Actions → General
+2. Enable: "Allow all actions and reusable workflows"
+3. Enable: "Read and write permissions"
+4. Click: Save
+
+<span class="code-comment"># All 8 workflows will activate automatically!</span></pre>
+                </div>
+            </div>
+
+            <div class="code-example fade-in">
+                <div class="code-header">
+                    <span class="code-label">👥 Step 3: Share with Team</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment"># Team members only need:</span>
+git clone https://github.com/YourOrg/AROG.git
+cd AROG
+npm install
+
+<span class="code-comment"># That's it! No configuration. Everything works automatically.</span>
+<span class="code-comment"># VS Code opens → Context loads → SKILLS activate → Automation ready</span></pre>
+                </div>
+            </div>
+
+            <div class="stats fade-in">
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Config Files to Edit</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Commands to Run</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Automatic</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-title">🎬 The End... or Just the Beginning?</div>
+            <p class="footer-subtitle">
+                You've seen the story. Now live it. AROG is yours to use, customize, and share.
+            </p>
+            <div class="footer-links">
+                <a href="index.html">📚 Full Documentation</a>
+                <a href="setup-guide.html">⚙️ Setup Guide</a>
+                <a href="configuration.html">🔧 Configuration</a>
+                <a href="api-reference.html">📖 API Reference</a>
+                <a href="context-sharing-guide.html">🤖 Context System</a>
+                <a href="../README.md">📄 README</a>
+            </div>
+            <p style="margin-top: 40px; opacity: 0.5; font-size: 14px;">
+                AROG - Autonomous Robot for Organization Growth<br>
+                Built with ❤️ for automation enthusiasts
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Copy code functionality
+        function copyCode(btn) {
+            const codeBlock = btn.closest('.code-example').querySelector('.code-content pre');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied! ✓';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Command details
+        const commands = {
+            test: {
+                label: '🧪 npm test',
+                code: `# Run all unit tests with coverage
+npm test
+
+# What it does:
+# - Runs Jest test runner
+# - Executes all tests in tests/unit/
+# - Generates coverage report
+# - Enforces 70% minimum coverage
+# - Fails if any test fails
+
+# Output:
+# - Test results in terminal
+# - Coverage report in coverage/
+# - HTML report in coverage/lcov-report/index.html`
+            },
+            lint: {
+                label: '✨ npm run lint',
+                code: `# Check code quality
+npm run lint
+
+# Auto-fix issues
+npm run lint:fix
+
+# What it does:
+# - Runs ESLint on all .js files
+# - Checks for code quality issues
+# - Reports errors and warnings
+# - Can auto-fix many issues with :fix
+
+# Common issues caught:
+# - Unused variables
+# - Missing semicolons
+# - Inconsistent spacing
+# - Best practice violations`
+            },
+            build: {
+                label: '🏗️ npm run build',
+                code: `# Build production bundle
+npm run build
+
+# What it does:
+# - Compiles TypeScript to JavaScript
+# - Bundles code with Webpack
+# - Minifies and optimizes
+# - Generates source maps
+# - Creates dist/ directory
+
+# Output:
+# - dist/bundle.js (production bundle)
+# - dist/bundle.js.map (source map)
+
+# Bundle size limit: 500KB`
+            },
+            e2e: {
+                label: '🌐 npm run e2e',
+                code: `# Run E2E tests (headless)
+npm run e2e
+
+# Run with UI
+npm run e2e:ui
+
+# Run specific browser
+npm run e2e -- --project=chromium
+
+# What it does:
+# - Runs Playwright tests
+# - Tests in 5 browsers:
+#   • Chromium (Desktop)
+#   • Firefox (Desktop)
+#   • WebKit (Safari)
+#   • Mobile Chrome
+#   • Mobile Safari
+# - Screenshots on failure
+# - Video recordings available
+
+# Test files: tests/e2e/*.spec.js`
+            },
+            security: {
+                label: '🛡️ npm run security',
+                code: `# Run security audit
+npm run security
+
+# What it does:
+# - Runs npm audit
+# - Checks for vulnerable dependencies
+# - Reports severity levels
+# - Suggests fixes
+
+# Auto-fix vulnerabilities
+npm audit fix
+
+# Severity levels:
+# - Low: Minor issues
+# - Moderate: Should fix soon
+# - High: Fix immediately
+# - Critical: Emergency fix needed`
+            },
+            perf: {
+                label: '⚡ npm run perf',
+                code: `# Run performance tests
+npm run perf
+
+# What it does:
+# - Runs Lighthouse CI
+# - Checks bundle size
+# - Measures performance score
+# - Reports metrics:
+#   • Performance (target: 90+)
+#   • Accessibility (target: 90+)
+#   • Best Practices (target: 90+)
+#   • SEO (target: 90+)
+
+# Bundle size check:
+npm run check:bundle
+# Fails if bundle > 500KB`
+            },
+            health: {
+                label: '❤️ npm run arog:health',
+                code: `# System health check
+npm run arog:health
+
+# What it checks:
+# ✅ Node.js version (18+)
+# ✅ npm version (9+)
+# ✅ Git installed
+# ✅ Required files present
+# ✅ Dependencies installed
+# ✅ Configuration valid
+
+# If anything fails:
+# - Follow the error message
+# - Run npm install
+# - Check Node.js version
+# - Run npm run setup`
+            },
+            validate: {
+                label: '✅ npm run arog:validate',
+                code: `# Full system validation
+npm run arog:validate
+
+# What it validates:
+# ✅ 14 required files
+# ✅ 8 GitHub workflows
+# ✅ 10 automation types
+# ✅ AROG agent installed
+# ✅ Test suite configured
+# ✅ Security scanning ready
+# ✅ Performance monitoring ready
+
+# This is your "everything working?" check
+# Run before deploying to production
+# Run after making major changes`
+            }
+        };
+
+        function showCommand(key) {
+            const details = document.getElementById('command-details');
+            const label = document.getElementById('command-label');
+            const code = document.getElementById('command-code');
+            
+            label.textContent = commands[key].label;
+            code.textContent = commands[key].code;
+            details.style.display = 'block';
+            details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyCommandCode() {
+            const code = document.getElementById('command-code');
+            navigator.clipboard.writeText(code.textContent).then(() => {
+                const btn = event.target;
+                btn.textContent = 'Copied! ✓';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Auto-scroll to section from URL hash
+        if (window.location.hash) {
+            setTimeout(() => {
+                const element = document.querySelector(window.location.hash);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+    </script>
+
+    <!-- Chapter 9: @arog - Your Complete Autonomous Agent -->
+    <section id="arogAgent" class="chapter">
+        <div class="chapter-container">
+            <div class="chapter-number fade-in">Chapter 9</div>
+            <h2 class="chapter-title fade-in">@arog - Your Complete Autonomous Agent</h2>
+            <p class="chapter-intro fade-in">
+                ONE @arog = EVERYTHING in Your Repository, Project & Organization
+            </p>
+            <div class="concept-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 60px 40px; border-radius: 30px; margin-bottom: 40px;">
+                <h3 style="font-size: 3.5em; margin-bottom: 20px; color: white;">@arog</h3>
+                <p style="font-size: 2.5em; font-weight: bold; margin-bottom: 20px; color: #ffd700;">ONE @arog = EVERYTHING</p>
+                <p style="font-size: 1.5em; opacity: 0.95;">
+                    Code • Review • Test • Fix • Deploy • Monitor • Optimize
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 The @arog Philosophy</h3>
+                <p><strong>@arog</strong> is your complete autonomous agent that handles <em>everything</em> in your development workflow:</p>
+                <ul>
+                    <li>✅ Write and refactor code</li>
+                    <li>✅ Review code quality and security</li>
+                    <li>✅ Generate and run all test types</li>
+                    <li>✅ Build and compile projects</li>
+                    <li>✅ Deploy to staging and production</li>
+                    <li>✅ Monitor performance and errors</li>
+                    <li>✅ Optimize continuously</li>
+                    <li>✅ Manage entire SDLC</li>
+                </ul>
+                <p style="margin-top: 20px; font-size: 1.3em; font-weight: bold; color: #667eea;">
+                    Instead of running multiple commands or using different tools, just ask @arog!
+                </p>
+            </div>
+
+            <h3 style="color: #667eea; margin: 40px 0 20px 0; font-size: 2em;">🚀 What @arog Can Do</h3>
+
+            <!-- <div class="grid-2"> -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin: 40px 0;">
+                <!-- Code Development -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">💻</div>
+                    <h4>Code Development</h4>
+                    <p>Write, refactor, and optimize code across your entire stack</p>
+                    <div class="code-block">
+@arog write a login component
+@arog refactor auth.ts for better performance
+@arog optimize this database query
+@arog add TypeScript types to utils
+@arog fix this bug in checkout flow</div>
+                    <ul>
+                        <li>Generate components, modules, utilities</li>
+                        <li>Refactor legacy code</li>
+                        <li>Add TypeScript types</li>
+                        <li>Optimize algorithms</li>
+                        <li>Fix bugs and errors</li>
+                    </ul>
+                </div>
+
+                <!-- Code Review -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                    <h4>Code Review</h4>
+                    <p>Comprehensive code analysis with actionable feedback</p>
+                    <div class="code-block">
+@arog review this code
+@arog review PR #123
+@arog check for security issues
+@arog review recent changes
+@arog analyze code quality</div>
+                    <ul>
+                        <li>Code quality analysis</li>
+                        <li>Security vulnerability detection</li>
+                        <li>Performance optimization suggestions</li>
+                        <li>Best practices validation</li>
+                        <li>Pull request reviews</li>
+                    </ul>
+                </div>
+
+                <!-- Testing -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🧪</div>
+                    <h4>Comprehensive Testing</h4>
+                    <p>Unit, E2E, integration, accessibility, and security testing</p>
+                    <div class="code-block">
+@arog run all tests
+@arog create tests for UserService
+@arog run E2E tests
+@arog check test coverage
+@arog run accessibility tests</div>
+                    <ul>
+                        <li>Unit test generation</li>
+                        <li>E2E test automation (Playwright)</li>
+                        <li>Integration testing</li>
+                        <li>Accessibility testing (axe-core)</li>
+                        <li>Security testing (npm audit)</li>
+                    </ul>
+                </div>
+
+                <!-- Build & Compile -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🏗️</div>
+                    <h4>Build & Compile</h4>
+                    <p>Automated builds with optimization and validation</p>
+                    <div class="code-block">
+@arog build the project
+@arog check build errors
+@arog optimize bundle size
+@arog run type checking
+@arog fix compilation errors</div>
+                    <ul>
+                        <li>Webpack/Vite builds</li>
+                        <li>TypeScript compilation</li>
+                        <li>Bundle size optimization</li>
+                        <li>Dependency resolution</li>
+                        <li>Build error diagnostics</li>
+                    </ul>
+                </div>
+
+                <!-- Code Quality -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">⭐</div>
+                    <h4>Code Quality</h4>
+                    <p>Lint, format, and enforce coding standards</p>
+                    <div class="code-block">
+@arog run linter
+@arog fix all lint errors
+@arog format code
+@arog check code standards
+@arog identify technical debt</div>
+                    <ul>
+                        <li>ESLint analysis</li>
+                        <li>Auto-fix lint issues</li>
+                        <li>Prettier formatting</li>
+                        <li>Coding standards enforcement</li>
+                        <li>Technical debt identification</li>
+                    </ul>
+                </div>
+
+                <!-- Security Scanning -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔒</div>
+                    <h4>Security Scanning</h4>
+                    <p>Comprehensive security audits and vulnerability management</p>
+                    <div class="code-block">
+@arog run security scan
+@arog check for vulnerabilities
+@arog audit dependencies
+@arog fix security issues
+@arog scan for exposed secrets</div>
+                    <ul>
+                        <li>npm audit scanning</li>
+                        <li>Dependency vulnerability detection</li>
+                        <li>Secret scanning</li>
+                        <li>OWASP compliance checks</li>
+                        <li>Automated security fixes</li>
+                    </ul>
+                </div>
+
+                <!-- Performance Testing -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">⚡</div>
+                    <h4>Performance Testing</h4>
+                    <p>Monitor, analyze, and optimize application performance</p>
+                    <div class="code-block">
+@arog run performance tests
+@arog analyze bundle size
+@arog check Core Web Vitals
+@arog optimize loading speed
+@arog improve LCP score</div>
+                    <ul>
+                        <li>Lighthouse CI testing</li>
+                        <li>Core Web Vitals monitoring</li>
+                        <li>Bundle size analysis</li>
+                        <li>Load time optimization</li>
+                        <li>Performance regression detection</li>
+                    </ul>
+                </div>
+
+                <!-- Accessibility Testing -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">♿</div>
+                    <h4>Accessibility Testing</h4>
+                    <p>Ensure WCAG compliance and inclusive design</p>
+                    <div class="code-block">
+@arog run accessibility tests
+@arog check WCAG compliance
+@arog fix a11y issues
+@arog audit accessibility
+@arog test keyboard navigation</div>
+                    <ul>
+                        <li>axe-core automated testing</li>
+                        <li>WCAG 2.1 compliance checks</li>
+                        <li>Keyboard navigation testing</li>
+                        <li>Screen reader compatibility</li>
+                        <li>Color contrast validation</li>
+                    </ul>
+                </div>
+
+                <!-- Deployment -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🚀</div>
+                    <h4>Deployment Automation</h4>
+                    <p>Deploy to staging, production, and manage environments</p>
+                    <div class="code-block">
+@arog deploy to staging
+@arog deploy to production
+@arog rollback deployment
+@arog check deployment status
+@arog run smoke tests</div>
+                    <ul>
+                        <li>Automated deployments</li>
+                        <li>Environment management</li>
+                        <li>Rollback capabilities</li>
+                        <li>Blue-green deployments</li>
+                        <li>Deployment health checks</li>
+                    </ul>
+                </div>
+
+                <!-- PR Management -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔀</div>
+                    <h4>Pull Request Management</h4>
+                    <p>Automated PR reviews, approvals, and merge management</p>
+                    <div class="code-block">
+@arog review PR #456
+@arog approve PR if tests pass
+@arog merge PR #789
+@arog check PR status
+@arog resolve merge conflicts</div>
+                    <ul>
+                        <li>Automated PR reviews</li>
+                        <li>Code quality checks on PRs</li>
+                        <li>Test validation before merge</li>
+                        <li>Conflict resolution</li>
+                        <li>PR status tracking</li>
+                    </ul>
+                </div>
+
+                <!-- Documentation -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📚</div>
+                    <h4>Documentation</h4>
+                    <p>Generate and maintain comprehensive documentation</p>
+                    <div class="code-block">
+@arog generate API docs
+@arog update README
+@arog create usage guide
+@arog document this function
+@arog write onboarding guide</div>
+                    <ul>
+                        <li>API documentation generation</li>
+                        <li>README maintenance</li>
+                        <li>Code comments and JSDoc</li>
+                        <li>User guides and tutorials</li>
+                        <li>Architecture documentation</li>
+                    </ul>
+                </div>
+
+                <!-- Setup & Configuration -->
+                <div class="capability-card-detailed">
+                    <div style="font-size: 3em; margin-bottom: 15px;">⚙️</div>
+                    <h4>Setup & Configuration</h4>
+                    <p>Project setup, configuration, and environment management</p>
+                    <div class="code-block">
+@arog setup new project
+@arog configure CI/CD
+@arog setup testing environment
+@arog install dependencies
+@arog configure ESLint</div>
+                    <ul>
+                        <li>Project initialization</li>
+                        <li>CI/CD pipeline setup</li>
+                        <li>Environment configuration</li>
+                        <li>Dependency management</li>
+                        <li>Tool configuration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; margin: 60px 0;">
+                <h3 style="color: white; font-size: 2em;">💡 Real-World @arog Workflows</h3>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h4 style="color: white; margin-bottom: 10px;">Complete Feature Development</h4>
+                    <div class="code-block">
+@arog create a user authentication system with login, logout, and password reset
+                    </div>
+                    <p style="margin-top: 15px; line-height: 1.8;">
+                        <strong>@arog Response:</strong><br>
+                        ✅ Created auth components (Login.tsx, Logout.tsx, PasswordReset.tsx)<br>
+                        ✅ Generated unit tests (15 tests, 100% coverage)<br>
+                        ✅ Added E2E tests for auth flows<br>
+                        ✅ Implemented security best practices<br>
+                        ✅ Updated documentation<br>
+                        ✅ Ready for code review
+                    </p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h4 style="color: white; margin-bottom: 10px;">Bug Investigation & Fix</h4>
+                    <div class="code-block">
+@arog investigate why checkout is failing in production
+                    </div>
+                    <p style="margin-top: 15px; line-height: 1.8;">
+                        <strong>@arog Response:</strong><br>
+                        🔍 Analyzed logs and identified issue<br>
+                        🐛 Root cause: Race condition in payment processing<br>
+                        🔧 Fixed race condition with proper locking<br>
+                        ✅ Added unit tests for edge case<br>
+                        ✅ Created E2E test for full checkout flow<br>
+                        🚀 Ready to deploy fix
+                    </p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h4 style="color: white; margin-bottom: 10px;">Full Deployment Pipeline</h4>
+                    <div class="code-block">
+@arog deploy this feature to production
+                    </div>
+                    <p style="margin-top: 15px; line-height: 1.8;">
+                        <strong>@arog Response:</strong><br>
+                        ✅ All tests passed (Unit: 100/100, E2E: 45/45)<br>
+                        ✅ Lint check passed<br>
+                        ✅ Security scan clean<br>
+                        ✅ Performance tests passed<br>
+                        ✅ Deployed to staging<br>
+                        ✅ Smoke tests passed on staging<br>
+                        ✅ Deployed to production<br>
+                        🚀 Feature live, monitoring metrics
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 40px 0 20px 0; font-size: 2em;">🔄 Complete @arog Workflow</h3>
+            
+            <div class="workflow-diagram" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 30px 0;">
+                <div class="workflow-step">1️⃣ You Ask</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">2️⃣ @arog Analyzes</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">3️⃣ @arog Acts</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">4️⃣ Results Delivered</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">5️⃣ Automation Continues</div>
+            </div>
+
+            <style>
+                .workflow-step {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    min-width: 150px;
+                    text-align: center;
+                }
+                .workflow-arrow {
+                    font-size: 2em;
+                    color: #667eea;
+                    display: flex;
+                    align-items: center;
+                }
+            </style>
+
+            <div class="code-block" style="margin: 30px 0;">
+                <h4>Complete Development Lifecycle:</h4>
+1. Development: Write code, create features, refactor
+2. Review: Automated code review, quality checks
+3. Test: Unit, E2E, integration, accessibility, security tests
+4. Build: Compile, bundle, optimize
+5. Validate: Lint, type check, security scan
+6. Deploy: Staging → Production with health checks
+7. Monitor: Performance metrics, error tracking
+8. Optimize: Continuous improvement based on data
+            </div>
+
+            <h3 style="color: #667eea; margin: 40px 0 20px 0; font-size: 2em;">🌐 Organization-Wide @arog</h3>
+
+            <div class="info-box">
+                <h3>@arog Works Across Your Entire Organization</h3>
+                <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold;">
+                        GitHub Actions
+                    </div>
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold;">
+                        VS Code
+                    </div>
+                    <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold;">
+                        Slack/Teams
+                    </div>
+                    <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold;">
+                        Jira/Linear
+                    </div>
+                    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold;">
+                        Jenkins/GitLab CI
+                    </div>
+                    <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold;">
+                        Docker/Kubernetes
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 1.2em; text-align: center;">
+                    <strong>ONE @arog</strong> = Consistent automation across all tools and teams
+                </p>
+            </div>
+
+            <div class="warning-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin: 40px 0; padding: 40px; border-radius: 20px;">
+                <h3 style="color: white; font-size: 2.5em; text-align: center; margin-bottom: 20px;">
+                    🎊 ONE @arog = EVERYTHING
+                </h3>
+                <p style="font-size: 1.5em; text-align: center; line-height: 1.8;">
+                    From your first line of code to production deployment,<br>
+                    from individual developers to entire organizations,<br>
+                    <strong>@arog</strong> is your complete autonomous development partner.
+                </p>
+                <p style="text-align: center; margin-top: 30px; font-size: 1.3em; opacity: 0.95;">
+                    Code • Review • Test • Fix • Deploy • Monitor • Optimize • Repeat
+                </p>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="arog-agent-complete-guide.html" style="display: inline-block; background: white; color: #667eea; padding: 15px 40px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.2em; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        📖 View Complete @arog Guide
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="#chapter-8" class="nav-btn">← Previous: Advanced Customization</a>
+                <a href="#" class="nav-btn">Back to Top ↑</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Access Links -->
+    <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 60px 20px; text-align: center; margin-top: 60px;">
+        <h2 style="font-size: 2.5em; margin-bottom: 20px; color: white;">📚 AROG Documentation</h2>
+        <p style="font-size: 1.2em; margin-bottom: 30px; color: rgba(255,255,255,0.95);">Explore all AROG resources and guides</p>
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="index.html" style="background: white; color: #667eea; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-size: 1.2em; font-weight: bold; display: inline-block; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                🏠 Home
+            </a>
+            <a href="setup-guide.html" style="background: white; color: #667eea; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-size: 1.2em; font-weight: bold; display: inline-block; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                📖 Setup Guide
+            </a>
+            <a href="configuration.html" style="background: white; color: #667eea; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-size: 1.2em; font-weight: bold; display: inline-block; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                ⚙️ Configuration
+            </a>
+            <a href="api-reference.html" style="background: white; color: #667eea; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-size: 1.2em; font-weight: bold; display: inline-block; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                📚 API Reference
+            </a>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROG - Configuration Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f8f9fa;
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .config-section {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        h2 { color: #667eea; margin-bottom: 20px; font-size: 2em; }
+        h3 { color: #764ba2; margin: 20px 0 10px; font-size: 1.4em; }
+        code {
+            background: #1a1a2e;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #00c853;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        pre code { padding: 0; background: none; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        th {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 600;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 8px;
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <h1>⚙️ AROG Configuration</h1>
+        <p style="font-size: 1.2em; margin-bottom: 40px;">Customize AROG to fit your organization's needs</p>
+
+        <div class="config-section">
+            <h2>📝 ESLint Configuration</h2>
+            <p>File: <code>.eslintrc.js</code></p>
+            <h3>Customize Rules:</h3>
+            <pre><code>module.exports = {
+  rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    // Add your custom rules here
+    'max-len': ['error', { code: 120 }],
+    'arrow-parens': ['error', 'always'],
+  },
+};</code></pre>
+            <h3>Common Customizations:</h3>
+            <table>
+                <tr>
+                    <th>Rule</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>max-len</code></td>
+                    <td>Maximum line length</td>
+                    <td><code>['error', { code: 100 }]</code></td>
+                </tr>
+                <tr>
+                    <td><code>indent</code></td>
+                    <td>Indentation style</td>
+                    <td><code>['error', 2]</code></td>
+                </tr>
+                <tr>
+                    <td><code>semi</code></td>
+                    <td>Require semicolons</td>
+                    <td><code>['error', 'always']</code></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="config-section">
+            <h2>🧪 Jest Configuration</h2>
+            <p>File: <code>jest.config.js</code></p>
+            <h3>Coverage Thresholds:</h3>
+            <pre><code>coverageThresholds: {
+  global: {
+    branches: 70,    // Minimum 70% branch coverage
+    functions: 70,   // Minimum 70% function coverage
+    lines: 70,       // Minimum 70% line coverage
+    statements: 70,  // Minimum 70% statement coverage
+  },
+},</code></pre>
+            <h3>Recommended Thresholds:</h3>
+            <table>
+                <tr>
+                    <th>Project Type</th>
+                    <th>Threshold</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>New Project</td>
+                    <td>80-90%</td>
+                    <td>Start with high coverage</td>
+                </tr>
+                <tr>
+                    <td>Legacy Project</td>
+                    <td>50-70%</td>
+                    <td>Gradually increase</td>
+                </tr>
+                <tr>
+                    <td>Critical Systems</td>
+                    <td>90-100%</td>
+                    <td>Maximum safety</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="config-section">
+            <h2>🎭 Playwright Configuration</h2>
+            <p>File: <code>playwright.config.js</code></p>
+            <h3>Browser Selection:</h3>
+            <pre><code>projects: [
+  { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+  { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+  { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+  { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] } },
+  { name: 'Mobile Safari', use: { ...devices['iPhone 12'] } },
+],</code></pre>
+            <p style="margin-top: 15px;"><strong>Tip:</strong> Comment out browsers you don't need to speed up tests</p>
+        </div>
+
+        <div class="config-section">
+            <h2>🔒 Security Configuration</h2>
+            <h3>npm audit Severity Levels:</h3>
+            <p>In workflow file: <code>.github/workflows/arog-security.yml</code></p>
+            <pre><code># Block on critical or high vulnerabilities
+if (vulnerabilities.critical > 0 || vulnerabilities.high > 0) {
+  process.exit(1);
+}
+
+// For stricter security, block on moderate too:
+if (vulnerabilities.moderate > 0) {
+  process.exit(1);
+}</code></pre>
+        </div>
+
+        <div class="config-section">
+            <h2>⚡ Performance Budgets</h2>
+            <p>File: <code>lighthouserc.json</code></p>
+            <h3>Performance Scores:</h3>
+            <pre><code>assertions: {
+  'categories:performance': ['error', { minScore: 0.9 }],
+  'categories:accessibility': ['error', { minScore: 0.9 }],
+  'categories:best-practices': ['error', { minScore: 0.9 }],
+  'categories:seo': ['error', { minScore: 0.9 }],
+},</code></pre>
+            <h3>Bundle Size Limits:</h3>
+            <p>File: <code>scripts/check-bundle-size.js</code></p>
+            <pre><code>const MAX_SIZE = 500 * 1024; // 500KB
+const WARN_SIZE = 400 * 1024; // 400KB
+
+// Adjust based on your needs:
+const MAX_SIZE = 1024 * 1024; // 1MB for larger apps</code></pre>
+        </div>
+
+        <div class="config-section">
+            <h2>🤖 AROG Agent Customization</h2>
+            <p>File: <code>.github/agents/arog.agent.md</code></p>
+            <h3>Modify Automation Rules:</h3>
+            <pre><code>### On Pull Requests:
+1. Full code review
+2. Run all test suites
+3. Security scanning
+4. Performance testing
+5. Accessibility checks
+6. Build validation
+7. [Add your custom checks here]</code></pre>
+        </div>
+
+        <div class="config-section">
+            <h2>🔔 Notification Settings</h2>
+            <h3>Slack/Teams Integration:</h3>
+            <p>Add to workflow files:</p>
+            <pre><code>- name: Notify Team
+  if: failure()
+  uses: slackapi/slack-github-action@v1
+  with:
+    webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+    payload: |
+      {
+        "text": "❌ AROG Tests Failed: ${{ github.repository }}"
+      }</code></pre>
+        </div>
+
+        <div class="config-section">
+            <h2>📊 GitHub Actions Scheduling</h2>
+            <h3>Daily Security Scans:</h3>
+            <pre><code>on:
+  schedule:
+    - cron: '0 2 * * *'  # 2 AM UTC daily
+    
+# Change to weekly:
+    - cron: '0 2 * * 1'  # 2 AM UTC every Monday</code></pre>
+        </div>
+
+        <div style="margin-top: 50px; padding: 30px; background: rgba(102, 126, 234, 0.1); border-radius: 15px;">
+            <h3 style="margin-bottom: 15px;">💡 Configuration Best Practices</h3>
+            <ul style="margin-left: 20px;">
+                <li>✅ Start with strict rules and relax as needed</li>
+                <li>✅ Test configuration changes on a branch first</li>
+                <li>✅ Document custom settings for your team</li>
+                <li>✅ Review and update thresholds quarterly</li>
+                <li>✅ Use environment variables for secrets</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <a href="api-reference.html" class="back-link" style="margin-left: 20px;">API Reference →</a>
+        </div>
+    </div>
+</body>
+</html>

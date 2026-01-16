@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROG - Setup Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f8f9fa;
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .step {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        .step-title { font-size: 1.8em; margin-bottom: 15px; }
+        code {
+            background: #1a1a2e;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #00c853;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        pre code { padding: 0; background: none; }
+        .warning {
+            background: rgba(255, 152, 0, 0.1);
+            border-left-color: #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+        }
+        .success {
+            background: rgba(0, 200, 83, 0.1);
+            border-left-color: #00c853;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #00c853;
+        }
+        a { color: #667eea; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <h1>🚀 AROG Setup Guide</h1>
+        <p style="font-size: 1.2em; margin-bottom: 40px;">Complete installation and configuration guide for your organization</p>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">1</span>
+                Clone or Download AROG
+            </h2>
+            <p>Get the AROG repository to your local machine:</p>
+            <pre><code>git clone https://github.com/YourOrg/AROG.git
+cd AROG</code></pre>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">2</span>
+                Run Automated Setup
+            </h2>
+            <p>AROG includes an automated setup script that configures everything:</p>
+            <pre><code>npm run arog:setup</code></pre>
+            <p>This will:</p>
+            <ul style="margin-left: 40px; margin-top: 15px;">
+                <li>✅ Install all dependencies</li>
+                <li>✅ Install Playwright browsers</li>
+                <li>✅ Create directory structure</li>
+                <li>✅ Validate configuration</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">3</span>
+                Verify Installation
+            </h2>
+            <p>Validate that everything is configured correctly:</p>
+            <pre><code>npm run arog:validate</code></pre>
+            <div class="success">
+                <strong>✅ Expected Output:</strong><br>
+                All 10 automation types configured<br>
+                8 GitHub Actions workflows ready<br>
+                AROG agent installed<br>
+                System fully operational
+            </div>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">4</span>
+                Connect to GitHub
+            </h2>
+            <p>Create a GitHub repository and push AROG:</p>
+            <pre><code># Create repo on GitHub first, then:
+git remote add origin https://github.com/YourOrg/AROG.git
+git branch -M main
+git commit -m "feat: Add AROG automation framework"
+git push -u origin main</code></pre>
+            <div class="warning">
+                ⚠️ <strong>Important:</strong> Make sure to create the repository on GitHub before pushing
+            </div>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">5</span>
+                Configure GitHub Actions
+            </h2>
+            <p>Enable GitHub Actions in your repository:</p>
+            <ol style="margin-left: 40px; margin-top: 15px;">
+                <li>Go to your GitHub repository</li>
+                <li>Click on "Actions" tab</li>
+                <li>Click "I understand my workflows, go ahead and enable them"</li>
+                <li>Workflows will now run automatically on commits and PRs</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">6</span>
+                Activate AROG Agent in VS Code
+            </h2>
+            <p>The AROG agent is automatically available in VS Code GitHub Copilot:</p>
+            <ol style="margin-left: 40px; margin-top: 15px;">
+                <li>Open VS Code</li>
+                <li>Open GitHub Copilot Chat (<code>Cmd+Shift+I</code> or <code>Ctrl+Shift+I</code>)</li>
+                <li>Type: <code>@arog review this code</code></li>
+                <li>AROG will respond and help you!</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">7</span>
+                Test the System
+            </h2>
+            <p>Run all tests to ensure everything works:</p>
+            <pre><code># Unit tests
+npm test
+
+# E2E tests  
+npm run test:e2e
+
+# Security scan
+npm run security:audit
+
+# Build check
+npm run build
+
+# All validation
+npm run arog:health</code></pre>
+        </div>
+
+        <div class="step">
+            <h2 class="step-title">
+                <span class="step-number">8</span>
+                View Documentation
+            </h2>
+            <p>Start the documentation server:</p>
+            <pre><code>npm run docs:serve</code></pre>
+            <p>Open your browser to: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+        </div>
+
+        <div class="success" style="margin-top: 50px;">
+            <h3 style="margin-bottom: 15px;">🎉 Setup Complete!</h3>
+            <p><strong>What's Next?</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>✅ Make a commit and watch AROG automatically review it</li>
+                <li>✅ Create a pull request and see all 10 automations run</li>
+                <li>✅ Chat with <code>@arog</code> in VS Code for help</li>
+                <li>✅ Share AROG with your team</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 50px; padding: 30px; background: rgba(102, 126, 234, 0.1); border-radius: 15px;">
+            <h3 style="margin-bottom: 15px;">📚 Additional Resources</h3>
+            <ul style="margin-left: 20px;">
+                <li><a href="configuration.html">Configuration Guide</a> - Customize AROG settings</li>
+                <li><a href="api-reference.html">API Reference</a> - Complete automation API</li>
+                <li><a href="index.html">Home</a> - Back to main page</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
