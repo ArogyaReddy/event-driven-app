@@ -1,0 +1,3 @@
+[submodule ".arog"]
+	path = .arog
+	url = https://github.com/ArogyaReddy/arog.git

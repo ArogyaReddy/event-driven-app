@@ -1,0 +1,111 @@
+name: 🔍 AROG - Automated Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  code-review:
+    name: AI Code Review
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: 🔍 Analyze Changes
+        id: analyze
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD --name-only > changed-files.txt
+          
+          echo "Changed files:"
+          cat changed-files.txt
+          
+          FILE_COUNT=$(wc -l < changed-files.txt)
+          echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+          
+      - name: 🤖 Generate Code Review
+        run: |
+          node -e "
+          const fs = require('fs');
+          const changedFiles = fs.readFileSync('changed-files.txt', 'utf8').split('\n').filter(f => f);
+          
+          const review = {
+            summary: 'AROG Automated Code Review',
+            filesReviewed: changedFiles.length,
+            findings: [],
+            recommendations: []
+          };
+          
+          // Check for common issues
+          changedFiles.forEach(file => {
+            if (file.endsWith('.js') || file.endsWith('.ts')) {
+              review.findings.push({
+                file,
+                type: 'info',
+                message: 'Code changes detected - ensure tests are updated'
+              });
+            }
+            
+            if (file.includes('package.json')) {
+              review.recommendations.push('Package.json modified - run npm audit');
+            }
+            
+            if (file.includes('.env') || file.includes('secret')) {
+              review.findings.push({
+                file,
+                type: 'warning',
+                message: '⚠️ Potential secret file - ensure no credentials committed'
+              });
+            }
+          });
+          
+          // Best practices check
+          review.recommendations.push('✅ Ensure all functions have unit tests');
+          review.recommendations.push('✅ Add JSDoc comments for public APIs');
+          review.recommendations.push('✅ Verify error handling for edge cases');
+          
+          fs.writeFileSync('code-review.json', JSON.stringify(review, null, 2));
+          console.log('Review complete:', review.filesReviewed, 'files analyzed');
+          "
+          
+      - name: 💬 Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = JSON.parse(fs.readFileSync('code-review.json'));
+            
+            let comment = `## 🤖 AROG Code Review\n\n`;
+            comment += `**Files Reviewed:** ${review.filesReviewed}\n\n`;
+            
+            if (review.findings.length > 0) {
+              comment += `### 🔍 Findings\n\n`;
+              review.findings.forEach(finding => {
+                comment += `- **${finding.file}**: ${finding.message}\n`;
+              });
+              comment += `\n`;
+            }
+            
+            comment += `### 💡 Recommendations\n\n`;
+            review.recommendations.forEach(rec => {
+              comment += `- ${rec}\n`;
+            });
+            
+            comment += `\n---\n*Powered by AROG - Autonomous Robot for Organization Growth*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            })

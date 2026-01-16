@@ -1,0 +1,81 @@
+name: 📝 AROG - Code Quality
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  code-quality:
+    name: ESLint & Prettier
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: 📚 Install Dependencies
+        run: npm ci
+        
+      - name: 🔍 Run ESLint
+        run: npm run lint -- --format=json --output-file=eslint-report.json || true
+        
+      - name: 📊 Parse ESLint Results
+        id: eslint
+        run: |
+          node -e "
+          const fs = require('fs');
+          const report = JSON.parse(fs.readFileSync('eslint-report.json'));
+          
+          let errorCount = 0;
+          let warningCount = 0;
+          let results = [];
+          
+          report.forEach(file => {
+            errorCount += file.errorCount;
+            warningCount += file.warningCount;
+            
+            if (file.messages.length > 0) {
+              results.push({
+                file: file.filePath,
+                messages: file.messages
+              });
+            }
+          });
+          
+          console.log(\`Errors: \${errorCount}\`);
+          console.log(\`Warnings: \${warningCount}\`);
+          
+          fs.writeFileSync('eslint-summary.txt', \`Errors: \${errorCount}, Warnings: \${warningCount}\`);
+          
+          if (errorCount > 0) {
+            console.log('❌ ESLint found errors');
+            process.exit(1);
+          }
+          "
+          
+      - name: ✨ Check Code Formatting
+        run: npm run format:check
+        
+      - name: 💬 Comment PR with Results
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('eslint-summary.txt', 'utf8');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 📝 AROG Code Quality Report\n\n${summary}\n\n✅ Code formatting: Checked\n\n[View Details](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+            })
