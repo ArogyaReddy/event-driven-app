@@ -1,0 +1,39 @@
+{
+  "name": "@arog/cli",
+  "version": "1.0.0",
+  "description": "AROG Interactive CLI - Portable automation interface that travels with your .arog configuration",
+  "type": "module",
+  "bin": {
+    "arog": "./bin/arog-cli.js"
+  },
+  "scripts": {
+    "arog": "node bin/arog-cli.js",
+    "welcome": "node bin/arog-cli.js --welcome",
+    "help": "node bin/arog-cli.js --help",
+    "demo": "node bin/arog-cli.js --demo",
+    "health": "node bin/arog-cli.js --health",
+    "postinstall": "node scripts/first-time-setup.js"
+  },
+  "keywords": [
+    "arog",
+    "automation",
+    "cli",
+    "interactive",
+    "developer-tools"
+  ],
+  "author": "AROG Team",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^9.2.12",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.1",
+    "boxen": "^7.1.1",
+    "cli-table3": "^0.6.3",
+    "figlet": "^1.7.0",
+    "gradient-string": "^2.0.2",
+    "nanospinner": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
