@@ -1,0 +1,190 @@
+name: AROG Alert System Demo
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'  # Daily at 9 AM
+
+jobs:
+  test-alert-system:
+    name: Test Alert & Logging System
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: .arog
+        run: npm install
+
+      - name: Install nodemailer for email alerts
+        working-directory: .arog
+        run: npm install nodemailer
+
+      - name: Test Alert Manager
+        working-directory: .arog
+        run: |
+          node -e "
+          import('./services/alert-manager.service.js').then(async (module) => {
+            const AlertManager = module.default;
+            const manager = new AlertManager();
+            await manager.initialize();
+            
+            // Test info alert
+            await manager.info(
+              'test-alert',
+              'AROG Test Alert',
+              'Testing alert system from GitHub Actions',
+              { workflow: '${{ github.workflow }}', runId: '${{ github.run_id }}' }
+            );
+            
+            // Get daily summary
+            const summary = await manager.getDailySummary();
+            console.log('Daily Summary:', JSON.stringify(summary, null, 2));
+          });
+          "
+
+      - name: Send Critical Alert (on failure)
+        if: failure()
+        env:
+          ALERT_SEVERITY: critical
+          ALERT_TYPE: workflow-failure
+          ALERT_TITLE: Alert System Test Failed
+          ALERT_MESSAGE: The alert system test workflow failed
+        run: node .arog/utils/workflow-alert.js
+
+  monitor-unit-tests:
+    name: Monitor Unit Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install AROG dependencies
+        working-directory: .arog
+        run: npm install && npm install nodemailer
+
+      - name: Log Test Start
+        working-directory: .arog
+        run: |
+          node -e "
+          import('./services/operation-logger.service.js').then(async (module) => {
+            const OperationLogger = module.default;
+            const logger = new OperationLogger({ enabled: true });
+            await logger.initialize();
+            const opId = await logger.logAsked({
+              name: 'unit-tests',
+              type: 'test-execution',
+              requestedBy: 'github-actions',
+              source: 'workflow',
+              parameters: { workflow: '${{ github.workflow }}' }
+            });
+            await logger.logInitiated(opId, { initiatedBy: 'jest' });
+            console.log('OPERATION_ID=' + opId);
+          });
+          " | tee operation.log
+
+      - name: Run Unit Tests
+        id: tests
+        continue-on-error: true
+        run: npm test
+
+      - name: Log Test Completion
+        if: success()
+        working-directory: .arog
+        run: |
+          OPERATION_ID=$(grep OPERATION_ID ../operation.log | cut -d'=' -f2)
+          node -e "
+          import('./services/operation-logger.service.js').then(async (module) => {
+            const OperationLogger = module.default;
+            const logger = new OperationLogger({ enabled: true });
+            await logger.initialize();
+            await logger.logDone('$OPERATION_ID', {
+              data: { status: 'passed' },
+              metrics: { exitCode: 0 }
+            });
+          });
+          "
+
+      - name: Log Test Failure & Send Alert
+        if: failure()
+        working-directory: .arog
+        run: |
+          OPERATION_ID=$(grep OPERATION_ID ../operation.log | cut -d'=' -f2)
+          
+          # Log failure
+          node -e "
+          import('./services/operation-logger.service.js').then(async (module) => {
+            const OperationLogger = module.default;
+            const logger = new OperationLogger({ enabled: true });
+            await logger.initialize();
+            await logger.logNotDone('$OPERATION_ID', {
+              message: 'Unit tests failed',
+              type: 'error',
+              code: 1
+            });
+          });
+          "
+          
+          # Send alert
+          ALERT_SEVERITY=high \
+          ALERT_TYPE=test-failure \
+          ALERT_TITLE="Unit Tests Failed" \
+          ALERT_MESSAGE="Unit tests failed in ${{ github.workflow }}" \
+          node utils/workflow-alert.js
+
+  daily-summary:
+    name: Send Daily Summary
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: .arog
+        run: npm install && npm install nodemailer
+
+      - name: Generate & Send Daily Summary
+        working-directory: .arog
+        run: |
+          node -e "
+          import('./services/alert-manager.service.js').then(async (module) => {
+            const AlertManager = module.default;
+            const manager = new AlertManager();
+            await manager.initialize();
+            
+            // Get daily summary
+            const summary = await manager.getDailySummary();
+            
+            // Send summary email
+            await manager.info(
+              'daily-report',
+              'AROG Daily Summary',
+              'Your daily automation summary is ready',
+              summary
+            );
+            
+            console.log('Daily summary sent!');
+          });
+          "

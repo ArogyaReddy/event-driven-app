@@ -1,0 +1,117 @@
+{
+  "$schema": "./schemas/developer-config.schema.json",
+  "configLevel": "developer",
+  "version": "2.0.0",
+  "extends": "project-config.json",
+  "developer": {
+    "name": "Local Developer",
+    "preferences": {
+      "editor": "vscode",
+      "terminal": "zsh",
+      "theme": "dark",
+      "fontSize": 14,
+      "tabSize": 2
+    }
+  },
+  "localOverrides": {
+    "testing": {
+      "watch": true,
+      "coverage": true,
+      "verbose": false,
+      "parallel": true,
+      "maxWorkers": "50%",
+      "cache": true
+    },
+    "linting": {
+      "autoFix": true,
+      "cache": true,
+      "fix": true
+    },
+    "formatting": {
+      "onSave": true,
+      "onType": false,
+      "onPaste": false
+    },
+    "typeChecking": {
+      "onSave": true,
+      "incremental": true,
+      "watch": true
+    }
+  },
+  "development": {
+    "hotReload": true,
+    "sourceMaps": true,
+    "debugging": {
+      "enabled": true,
+      "port": 9229,
+      "breakOnException": false
+    },
+    "server": {
+      "port": 3000,
+      "host": "localhost",
+      "open": true,
+      "proxy": {}
+    }
+  },
+  "preCommit": {
+    "enabled": true,
+    "hooks": {
+      "lint": true,
+      "format": true,
+      "typeCheck": true,
+      "test": {
+        "enabled": true,
+        "onlyStaged": true
+      }
+    },
+    "skipCi": false
+  },
+  "git": {
+    "autoStage": false,
+    "commitMessageFormat": "conventional-commits",
+    "signCommits": true,
+    "gpgKey": "auto"
+  },
+  "vscode": {
+    "extensions": {
+      "required": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.copilot-chat"
+      ],
+      "recommended": [
+        "ms-vscode.vscode-typescript-next",
+        "christian-kohler.path-intellisense",
+        "eamodio.gitlens",
+        "orta.vscode-jest"
+      ]
+    },
+    "settings": {
+      "editor.formatOnSave": true,
+      "editor.formatOnPaste": false,
+      "editor.formatOnType": false,
+      "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true
+      },
+      "eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact"],
+      "typescript.tsdk": "node_modules/typescript/lib",
+      "files.autoSave": "onFocusChange",
+      "files.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/coverage": true,
+        "**/.git": true
+      }
+    }
+  },
+  "performance": {
+    "cache": {
+      "enabled": true,
+      "directory": ".cache"
+    },
+    "incremental": true,
+    "parallel": true
+  }
+}

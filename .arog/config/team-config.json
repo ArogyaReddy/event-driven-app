@@ -1,0 +1,106 @@
+{
+  "$schema": "./schemas/team-config.schema.json",
+  "configLevel": "team",
+  "version": "2.0.0",
+  "extends": "org-config.json",
+  "team": {
+    "name": "Platform Engineering",
+    "description": "Core platform and infrastructure team",
+    "lead": "platform-lead",
+    "members": 12,
+    "timezone": "UTC",
+    "workingHours": {
+      "start": "09:00",
+      "end": "17:00",
+      "days": ["Mon", "Tue", "Wed", "Thu", "Fri"]
+    }
+  },
+  "overrides": {
+    "codeQuality": {
+      "eslint": {
+        "extends": ["airbnb-base", "plugin:node/recommended"],
+        "rules": {
+          "no-console": "warn",
+          "no-unused-vars": "error",
+          "prefer-const": "error"
+        }
+      },
+      "complexity": {
+        "maxCyclomaticComplexity": 8,
+        "maxCognitiveComplexity": 12
+      }
+    },
+    "testing": {
+      "minCoverage": {
+        "global": 90,
+        "statements": 90,
+        "branches": 85,
+        "functions": 90,
+        "lines": 90
+      },
+      "frameworks": {
+        "unit": ["jest"],
+        "e2e": ["playwright"],
+        "api": ["supertest"],
+        "load": ["k6"]
+      },
+      "requiredTestTypes": ["unit", "integration", "e2e", "api"]
+    },
+    "codeReview": {
+      "minReviewers": 2,
+      "requireCodeOwners": true,
+      "codeOwners": ["@platform-leads", "@senior-engineers"],
+      "autoAssign": true,
+      "labels": {
+        "required": ["status:review", "priority"],
+        "auto": ["team:platform"]
+      }
+    },
+    "deployment": {
+      "approvals": {
+        "staging": ["platform-lead"],
+        "production": ["platform-lead", "cto"]
+      },
+      "notifications": {
+        "slack": "#platform-deployments",
+        "email": ["platform-team@company.com"]
+      }
+    }
+  },
+  "teamSpecific": {
+    "techStack": {
+      "languages": ["TypeScript", "JavaScript", "Python", "Go"],
+      "frameworks": ["Node.js", "Express", "NestJS", "FastAPI"],
+      "databases": ["PostgreSQL", "Redis", "MongoDB"],
+      "cloud": ["AWS", "GCP"],
+      "containerization": ["Docker", "Kubernetes"]
+    },
+    "codingGuidelines": {
+      "namingConventions": {
+        "files": "kebab-case",
+        "classes": "PascalCase",
+        "functions": "camelCase",
+        "constants": "UPPER_SNAKE_CASE"
+      },
+      "fileOrganization": {
+        "maxLinesPerFile": 300,
+        "oneComponentPerFile": true,
+        "colocateTests": true
+      }
+    },
+    "cicd": {
+      "pipelineTemplate": "platform-template.yml",
+      "customSteps": [
+        "infrastructure-validation",
+        "database-migration-check",
+        "api-contract-validation"
+      ]
+    },
+    "onboarding": {
+      "documentation": "team-docs/onboarding.md",
+      "mentorship": true,
+      "pairProgramming": true,
+      "reviewPeriod": "2 weeks"
+    }
+  }
+}

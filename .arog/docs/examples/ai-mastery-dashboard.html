@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mastery Dashboard - Your Learning Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .card li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: background 0.3s;
+        }
+
+        .card li:hover {
+            background: #e9ecef;
+        }
+
+        .card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .progress-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .skill-bar {
+            margin: 20px 0;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .skill-progress {
+            background: #e9ecef;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge.new {
+            background: #ff6b6b;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tool-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .tool-card:hover {
+            background: #e9ecef;
+        }
+
+        .tool-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 AI Mastery Learning System</h1>
+            <p>Your Complete Guide to Becoming an AI-Powered Developer</p>
+        </header>
+
+        <!-- Progress Tracker -->
+        <div class="progress-section">
+            <h2>📊 Your Learning Progress</h2>
+            
+            <div class="skill-bar">
+                <div class="skill-name">GitHub Copilot Basics</div>
+                <div class="skill-progress">
+                    <div class="skill-fill" style="width: 30%">30%</div>
+                </div>
+            </div>
+
+            <div class="skill-bar">
+                <div class="skill-name">Advanced Prompt Engineering</div>
+                <div class="skill-progress">
+                    <div class="skill-fill" style="width: 0%">0%</div>
+                </div>
+            </div>
+
+            <div class="skill-bar">
+                <div class="skill-name">Custom Agent Development</div>
+                <div class="skill-progress">
+                    <div class="skill-fill" style="width: 0%">0%</div>
+                </div>
+            </div>
+
+            <div class="skill-bar">
+                <div class="skill-name">VS Code AI Mastery</div>
+                <div class="skill-progress">
+                    <div class="skill-fill" style="width: 20%">20%</div>
+                </div>
+            </div>
+
+            <div class="skill-bar">
+                <div class="skill-name">Project Implementation</div>
+                <div class="skill-progress">
+                    <div class="skill-fill" style="width: 10%">10%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+            <!-- Your Custom Agents -->
+            <div class="card">
+                <h2>🤖 Your Custom Agents <span class="badge new">NEW</span></h2>
+                <p>Custom agents created for your learning journey:</p>
+                <ul>
+                    <li>
+                        <strong>AI Mastery Mentor</strong><br>
+                        Your guide to staying current with AI tools and best practices
+                    </li>
+                    <li>
+                        <strong>Copilot Agent Builder</strong><br>
+                        Helps you create powerful custom agents and skills
+                    </li>
+                    <li>
+                        <strong>Project Accelerator</strong><br>
+                        Transforms learning into production-ready projects
+                    </li>
+                </ul>
+                <div class="quick-links">
+                    <button class="action-button" onclick="openAgent('ai-mastery-mentor')">Open Mentor</button>
+                    <button class="action-button" onclick="openAgent('copilot-agent-builder')">Build Agent</button>
+                </div>
+            </div>
+
+            <!-- Your Skills Library -->
+            <div class="card">
+                <h2>⚡ Your Skills Library <span class="badge new">NEW</span></h2>
+                <p>Essential skills for AI mastery:</p>
+                <ul>
+                    <li>
+                        <strong>Advanced Prompt Engineering</strong><br>
+                        Master the art of effective AI prompting
+                    </li>
+                    <li>
+                        <strong>VS Code AI Mastery</strong><br>
+                        Complete VS Code and Copilot workflow guide
+                    </li>
+                    <li>
+                        <strong>Stay Current with AI</strong><br>
+                        Never fall behind in the AI revolution
+                    </li>
+                </ul>
+                <div class="quick-links">
+                    <button class="action-button" onclick="openSkill('vscode-ai-mastery')">Learn VS Code</button>
+                    <button class="action-button" onclick="openSkill('stay-current-with-ai')">Stay Updated</button>
+                </div>
+            </div>
+
+            <!-- Essential Tools -->
+            <div class="card">
+                <h2>🛠️ Essential AI Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <strong>GitHub Copilot</strong>
+                        Your AI pair programmer
+                    </div>
+                    <div class="tool-card">
+                        <strong>VS Code</strong>
+                        AI-powered IDE
+                    </div>
+                    <div class="tool-card">
+                        <strong>Claude</strong>
+                        Advanced reasoning AI
+                    </div>
+                    <div class="tool-card">
+                        <strong>ChatGPT</strong>
+                        General purpose AI
+                    </div>
+                    <div class="tool-card">
+                        <strong>Cursor</strong>
+                        AI-first editor
+                    </div>
+                    <div class="tool-card">
+                        <strong>Codeium</strong>
+                        Free alternative
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Resources -->
+            <div class="card">
+                <h2>📚 Top Learning Resources</h2>
+                <ul>
+                    <li>
+                        <a href="https://docs.github.com/copilot" target="_blank">GitHub Copilot Documentation</a>
+                    </li>
+                    <li>
+                        <a href="https://code.visualstudio.com/docs" target="_blank">VS Code Documentation</a>
+                    </li>
+                    <li>
+                        <a href="https://skills.github.com" target="_blank">GitHub Skills (Interactive Courses)</a>
+                    </li>
+                    <li>
+                        <a href="https://learn.microsoft.com" target="_blank">Microsoft Learn (AI Paths)</a>
+                    </li>
+                    <li>
+                        <a href="https://github.blog/changelog/" target="_blank">GitHub Changelog</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Daily Practice -->
+            <div class="card">
+                <h2>✅ Today's Tasks</h2>
+                <ul>
+                    <li id="task1">
+                        <input type="checkbox" onchange="updateProgress()"> 
+                        Try one new Copilot feature (15 min)
+                    </li>
+                    <li id="task2">
+                        <input type="checkbox" onchange="updateProgress()"> 
+                        Read GitHub changelog (5 min)
+                    </li>
+                    <li id="task3">
+                        <input type="checkbox" onchange="updateProgress()"> 
+                        Practice keyboard shortcuts (10 min)
+                    </li>
+                    <li id="task4">
+                        <input type="checkbox" onchange="updateProgress()"> 
+                        Build something with AI (30 min)
+                    </li>
+                    <li id="task5">
+                        <input type="checkbox" onchange="updateProgress()"> 
+                        Document what you learned (10 min)
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Project Ideas -->
+            <div class="card">
+                <h2>💡 Starter Projects</h2>
+                <ul>
+                    <li>
+                        <strong>AI-Powered To-Do List</strong> (1-2 days)<br>
+                        Smart categorization and natural language input
+                    </li>
+                    <li>
+                        <strong>Code Snippet Manager</strong> (2-3 days)<br>
+                        AI-powered organization and search
+                    </li>
+                    <li>
+                        <strong>Learning Dashboard</strong> (3-5 days)<br>
+                        Track your AI mastery progress
+                    </li>
+                    <li>
+                        <strong>Custom Copilot Agent</strong> (1 day)<br>
+                        Build an agent for your workflow
+                    </li>
+                </ul>
+                <button class="action-button" onclick="startProject()">Start a Project</button>
+            </div>
+        </div>
+
+        <!-- Quick Start Guide -->
+        <div class="progress-section">
+            <h2>🎯 Quick Start Guide</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">Week 1: Foundations</h3>
+                    <ul style="list-style: none;">
+                        <li>✓ Set up GitHub Copilot</li>
+                        <li>✓ Learn keyboard shortcuts</li>
+                        <li>✓ Master chat commands</li>
+                        <li>✓ Build first project</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">Week 2-3: Intermediate</h3>
+                    <ul style="list-style: none;">
+                        <li>→ Advanced prompting</li>
+                        <li>→ Custom instructions</li>
+                        <li>→ Create first agent</li>
+                        <li>→ Optimize workflows</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">Week 4+: Advanced</h3>
+                    <ul style="list-style: none;">
+                        <li>→ Build complex agents</li>
+                        <li>→ VS Code extensions</li>
+                        <li>→ Share with community</li>
+                        <li>→ Teach others</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Remember:</strong> The best way to learn is by doing. Start with one small task today!</p>
+            <p style="margin-top: 10px;">Created with ❤️ using AI tools • January 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple progress tracking
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            console.log(`Daily progress: ${percentage}%`);
+            
+            // Show celebration when all tasks complete
+            if (completed === total) {
+                alert('🎉 Amazing! You completed all tasks today! Keep this momentum going!');
+            }
+        }
+
+        function openAgent(agentName) {
+            alert(`Opening ${agentName}.agent.md in VS Code...\n\nTo use this agent:\n1. Save this file to your workspace\n2. In VS Code, use @${agentName} in Copilot Chat\n3. Ask questions and get expert guidance!`);
+        }
+
+        function openSkill(skillName) {
+            alert(`Opening ${skillName}.skill.md...\n\nThis skill contains comprehensive guides and techniques. Study it and practice daily!`);
+        }
+
+        function startProject() {
+            const projects = [
+                'AI-Powered To-Do List',
+                'Code Snippet Manager',
+                'Learning Dashboard',
+                'Custom Copilot Agent'
+            ];
+            
+            const choice = Math.floor(Math.random() * projects.length);
+            alert(`Great choice! Let's start with: ${projects[choice]}\n\n1. Create a new folder in workarea/\n2. Ask AI Mastery Mentor agent for guidance\n3. Use Copilot to generate starter code\n4. Build, test, iterate!`);
+        }
+
+        // Animate progress bars on load
+        window.addEventListener('load', () => {
+            const fills = document.querySelectorAll('.skill-fill');
+            fills.forEach(fill => {
+                const width = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 100);
+            });
+        });
+
+        // Save checkbox state to localStorage
+        document.querySelectorAll('input[type="checkbox"]').forEach((checkbox, index) => {
+            const saved = localStorage.getItem(`task-${index}`);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+            
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(`task-${index}`, checkbox.checked);
+                updateProgress();
+            });
+        });
+
+        // Reset daily tasks at midnight
+        const today = new Date().toDateString();
+        const lastReset = localStorage.getItem('lastReset');
+        if (lastReset !== today) {
+            document.querySelectorAll('input[type="checkbox"]').forEach((checkbox, index) => {
+                checkbox.checked = false;
+                localStorage.setItem(`task-${index}`, 'false');
+            });
+            localStorage.setItem('lastReset', today);
+        }
+    </script>
+</body>
+</html>

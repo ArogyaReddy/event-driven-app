@@ -1,0 +1,266 @@
+{
+  "$schema": "./model-routing.schema.json",
+  "description": "AROG Smart Model Routing Configuration - Use free models when possible, paid models when necessary",
+  "version": "1.0.0",
+  
+  "models": {
+    "free": {
+      "primary": "gpt-4o-mini",
+      "fallback": ["gpt-4.1", "gpt-3.5-turbo"],
+      "cost": 0,
+      "tokensPerMinute": 150000,
+      "useFor": [
+        "simple queries",
+        "documentation lookup",
+        "basic explanations",
+        "simple code formatting",
+        "lint checks",
+        "simple refactoring",
+        "test execution",
+        "health checks",
+        "status reports"
+      ]
+    },
+    "paid": {
+      "primary": "claude-sonnet-4",
+      "fallback": ["gemini-pro-1.5", "gpt-4"],
+      "cost": 0.003,
+      "tokensPerMinute": 40000,
+      "useFor": [
+        "code generation",
+        "architecture design",
+        "complex refactoring",
+        "security analysis",
+        "performance optimization",
+        "code review",
+        "bug investigation",
+        "test generation",
+        "complex explanations"
+      ]
+    }
+  },
+
+  "routing": {
+    "rules": [
+      {
+        "name": "Simple Tasks - Always Free",
+        "condition": {
+          "taskType": ["health-check", "lint", "format", "docs-lookup", "simple-query"],
+          "complexity": "low",
+          "codeLines": {"max": 50}
+        },
+        "model": "free",
+        "reason": "Simple tasks don't require advanced reasoning"
+      },
+      {
+        "name": "Code Generation - Always Paid",
+        "condition": {
+          "taskType": ["code-generation", "feature-implementation", "component-creation"],
+          "keywords": ["create", "generate", "build", "implement"]
+        },
+        "model": "paid",
+        "reason": "Code generation requires high-quality output"
+      },
+      {
+        "name": "Security & Performance - Always Paid",
+        "condition": {
+          "taskType": ["security-review", "vulnerability-scan", "performance-optimization"],
+          "keywords": ["security", "vulnerability", "optimize", "performance"]
+        },
+        "model": "paid",
+        "reason": "Critical tasks require thorough analysis"
+      },
+      {
+        "name": "Code Review - Context-Based",
+        "condition": {
+          "taskType": ["code-review"],
+          "codeLines": {"min": 100}
+        },
+        "model": "paid",
+        "reason": "Large code reviews need deep understanding"
+      },
+      {
+        "name": "Small Code Review - Free",
+        "condition": {
+          "taskType": ["code-review"],
+          "codeLines": {"max": 99}
+        },
+        "model": "free",
+        "reason": "Small reviews can use free models"
+      },
+      {
+        "name": "Test Execution - Always Free",
+        "condition": {
+          "taskType": ["test-execution", "test-run", "validation"],
+          "keywords": ["run tests", "execute tests", "validate"]
+        },
+        "model": "free",
+        "reason": "Running tests doesn't require AI reasoning"
+      },
+      {
+        "name": "Test Generation - Always Paid",
+        "condition": {
+          "taskType": ["test-generation", "test-creation"],
+          "keywords": ["write tests", "generate tests", "create tests"]
+        },
+        "model": "paid",
+        "reason": "Writing good tests requires intelligence"
+      },
+      {
+        "name": "Documentation - Free for Reading, Paid for Writing",
+        "condition": {
+          "taskType": ["documentation"],
+          "action": "read"
+        },
+        "model": "free",
+        "reason": "Reading docs is simple lookup"
+      },
+      {
+        "name": "Documentation Generation - Paid",
+        "condition": {
+          "taskType": ["documentation"],
+          "action": "write"
+        },
+        "model": "paid",
+        "reason": "Writing good docs requires understanding"
+      },
+      {
+        "name": "Default - Free First, Escalate if Needed",
+        "condition": {
+          "default": true
+        },
+        "model": "free",
+        "escalateTo": "paid",
+        "escalateIf": [
+          "complexity detected",
+          "free model fails",
+          "user requests better quality"
+        ],
+        "reason": "Start free, upgrade if needed"
+      }
+    ]
+  },
+
+  "agents": {
+    "arog": {
+      "defaultModel": "free",
+      "escalationEnabled": true,
+      "overrides": {
+        "code-generation": "paid",
+        "security-review": "paid",
+        "architecture-design": "paid"
+      }
+    },
+    "arog-code-reviewer": {
+      "defaultModel": "paid",
+      "reason": "Code review quality is critical"
+    },
+    "arog-test-engineer": {
+      "defaultModel": "free",
+      "overrides": {
+        "test-generation": "paid",
+        "test-execution": "free"
+      }
+    },
+    "arog-security-expert": {
+      "defaultModel": "paid",
+      "reason": "Security cannot compromise on quality"
+    },
+    "arog-performance-optimizer": {
+      "defaultModel": "paid",
+      "reason": "Performance analysis needs deep understanding"
+    },
+    "arog-deployment-manager": {
+      "defaultModel": "free",
+      "reason": "Deployment is mostly automated scripts"
+    }
+  },
+
+  "skills": {
+    "arog-ai-assistance": {
+      "defaultModel": "free",
+      "reason": "Teaching and guidance work well with free models"
+    },
+    "arog-deployment": {
+      "defaultModel": "free",
+      "reason": "Deployment knowledge lookup is simple"
+    },
+    "advanced-prompt-engineering": {
+      "defaultModel": "paid",
+      "reason": "Advanced prompting needs sophisticated examples"
+    }
+  },
+
+  "workflows": {
+    "unit-tests": {
+      "model": "free",
+      "reason": "Test execution doesn't need AI"
+    },
+    "code-quality": {
+      "model": "free",
+      "reason": "Linting is rule-based"
+    },
+    "code-review": {
+      "model": "paid",
+      "reason": "Quality reviews need intelligence"
+    },
+    "e2e-tests": {
+      "model": "free",
+      "reason": "Test execution is automated"
+    },
+    "security": {
+      "model": "paid",
+      "reason": "Security analysis is critical"
+    },
+    "performance": {
+      "model": "paid",
+      "reason": "Performance optimization needs expertise"
+    },
+    "build": {
+      "model": "free",
+      "reason": "Build is automated compilation"
+    },
+    "pr-review": {
+      "model": "paid",
+      "reason": "PR reviews need thorough analysis"
+    }
+  },
+
+  "costTracking": {
+    "enabled": true,
+    "budgetLimits": {
+      "daily": 10.00,
+      "monthly": 200.00,
+      "annual": 2000.00
+    },
+    "alerts": {
+      "threshold": 80,
+      "notifyOn": ["email", "slack"]
+    },
+    "reporting": {
+      "frequency": "weekly",
+      "metrics": [
+        "total_cost",
+        "free_vs_paid_ratio",
+        "cost_by_agent",
+        "cost_by_task_type",
+        "cost_savings"
+      ]
+    }
+  },
+
+  "optimization": {
+    "autoEscalation": true,
+    "autoDowngrade": true,
+    "caching": {
+      "enabled": true,
+      "ttl": 3600,
+      "cacheSimpleQueries": true
+    },
+    "batchProcessing": {
+      "enabled": true,
+      "batchSize": 10,
+      "reason": "Batch simple tasks to free models"
+    }
+  }
+}

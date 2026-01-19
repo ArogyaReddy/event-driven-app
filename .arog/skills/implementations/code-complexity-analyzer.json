@@ -1,0 +1,58 @@
+{
+  "name": "code-complexity-analyzer",
+  "category": "analysis",
+  "level": "advanced",
+  "description": "Analyze code complexity using cyclomatic complexity, cognitive complexity, and maintainability index",
+  "version": "1.0.0",
+  "author": "@arog",
+  
+  "config": {
+    "thresholds": {
+      "cyclomatic_complexity": 10,
+      "cognitive_complexity": 15,
+      "maintainability_index": 60,
+      "lines_per_function": 50
+    },
+    "file_patterns": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"],
+    "ignore_patterns": ["node_modules/**", "dist/**", "build/**"]
+  },
+  
+  "execution": {
+    "command": "node",
+    "args": [".arog/skills/implementations/code-complexity-analyzer.js"],
+    "timeout": 60000
+  },
+  
+  "output": {
+    "format": "json",
+    "schema": {
+      "total_files": "number",
+      "complex_functions": "array",
+      "average_complexity": "number",
+      "recommendations": "array"
+    }
+  },
+  
+  "examples": [
+    {
+      "input": { "file": "src/app.js" },
+      "output": {
+        "file": "src/app.js",
+        "functions": [
+          {
+            "name": "processOrder",
+            "cyclomatic": 18,
+            "cognitive": 22,
+            "lines": 125,
+            "status": "critical"
+          }
+        ],
+        "average_complexity": 8.5,
+        "recommendation": "Refactor processOrder - too complex"
+      }
+    }
+  ],
+  
+  "dependencies": ["eslint", "complexity-report"],
+  "tags": ["analysis", "complexity", "code-quality"]
+}

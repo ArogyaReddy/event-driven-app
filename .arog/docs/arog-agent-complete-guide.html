@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@arog - Complete Agent Guide | ONE @arog = EVERYTHING</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .tagline {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .capability-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .capability-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .capability-card h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .capability-card .commands {
+            background: #f7f7f7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .capability-card .command {
+            color: #667eea;
+            margin: 5px 0;
+            padding: 5px;
+            background: white;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .capability-card ul {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .capability-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .capability-card li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .workflow-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .workflow-section h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .workflow-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .workflow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .workflow-step::after {
+            content: "→";
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .workflow-step:last-child::after {
+            content: "";
+        }
+
+        .examples-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .example {
+            background: #f7f7f7;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .example .user-input {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .example .arog-response {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .integration-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .integration-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+        }
+
+        .footer h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero .tagline {
+                font-size: 1.5em;
+            }
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>@arog</h1>
+            <div class="tagline">ONE @arog = EVERYTHING</div>
+            <p>Your Complete Autonomous Agent for Code, Test, Deploy, and Beyond</p>
+        </div>
+
+        <div class="workflow-section">
+            <h2>🎯 The @arog Philosophy</h2>
+            <p style="text-align: center; font-size: 1.3em; margin: 20px 0;">
+                <strong>ONE @arog = EVERYTHING</strong> in your repository, project, and organization.<br>
+                Code → Review → Test → Fix → Deploy → Monitor → Optimize
+            </p>
+            <div class="workflow-diagram">
+                <div class="workflow-step">💬 You Ask</div>
+                <div class="workflow-step">🤖 @arog Acts</div>
+                <div class="workflow-step">✅ Results Delivered</div>
+                <div class="workflow-step">🚀 Automation Continues</div>
+            </div>
+        </div>
+
+        <h2 style="color: white; text-align: center; font-size: 2.5em; margin: 40px 0;">
+            🚀 What @arog Can Do
+        </h2>
+
+        <div class="capabilities-grid">
+            <!-- Code Development -->
+            <div class="capability-card">
+                <div class="icon">💻</div>
+                <h3>Code Development</h3>
+                <p>Write, refactor, and optimize code across your entire stack</p>
+                <div class="commands">
+                    <span class="command">@arog write a login component</span>
+                    <span class="command">@arog refactor auth.ts for better performance</span>
+                    <span class="command">@arog optimize this database query</span>
+                    <span class="command">@arog add TypeScript types to utils</span>
+                </div>
+                <ul>
+                    <li>Generate components, modules, utilities</li>
+                    <li>Refactor legacy code</li>
+                    <li>Add TypeScript types</li>
+                    <li>Optimize algorithms</li>
+                    <li>Fix bugs and errors</li>
+                </ul>
+            </div>
+
+            <!-- Code Review -->
+            <div class="capability-card">
+                <div class="icon">🔍</div>
+                <h3>Code Review</h3>
+                <p>Comprehensive code analysis with actionable feedback</p>
+                <div class="commands">
+                    <span class="command">@arog review this code</span>
+                    <span class="command">@arog review PR #123</span>
+                    <span class="command">@arog check for security issues</span>
+                    <span class="command">@arog review recent changes</span>
+                </div>
+                <ul>
+                    <li>Code quality analysis</li>
+                    <li>Security vulnerability detection</li>
+                    <li>Performance optimization suggestions</li>
+                    <li>Best practices validation</li>
+                    <li>Pull request reviews</li>
+                </ul>
+            </div>
+
+            <!-- Testing -->
+            <div class="capability-card">
+                <div class="icon">🧪</div>
+                <h3>Comprehensive Testing</h3>
+                <p>Unit, E2E, integration, accessibility, and security testing</p>
+                <div class="commands">
+                    <span class="command">@arog run all tests</span>
+                    <span class="command">@arog create tests for UserService</span>
+                    <span class="command">@arog run E2E tests</span>
+                    <span class="command">@arog check test coverage</span>
+                </div>
+                <ul>
+                    <li>Unit test generation</li>
+                    <li>E2E test automation (Playwright)</li>
+                    <li>Integration testing</li>
+                    <li>Accessibility testing (axe-core)</li>
+                    <li>Security testing (npm audit)</li>
+                </ul>
+            </div>
+
+            <!-- Build & Compile -->
+            <div class="capability-card">
+                <div class="icon">🏗️</div>
+                <h3>Build & Compile</h3>
+                <p>Automated builds with optimization and validation</p>
+                <div class="commands">
+                    <span class="command">@arog build the project</span>
+                    <span class="command">@arog check build errors</span>
+                    <span class="command">@arog optimize bundle size</span>
+                    <span class="command">@arog run type checking</span>
+                </div>
+                <ul>
+                    <li>Webpack/Vite builds</li>
+                    <li>TypeScript compilation</li>
+                    <li>Bundle size optimization</li>
+                    <li>Dependency resolution</li>
+                    <li>Build error diagnostics</li>
+                </ul>
+            </div>
+
+            <!-- Code Quality -->
+            <div class="capability-card">
+                <div class="icon">⭐</div>
+                <h3>Code Quality</h3>
+                <p>Lint, format, and enforce coding standards</p>
+                <div class="commands">
+                    <span class="command">@arog run linter</span>
+                    <span class="command">@arog fix all lint errors</span>
+                    <span class="command">@arog format code</span>
+                    <span class="command">@arog check code standards</span>
+                </div>
+                <ul>
+                    <li>ESLint analysis</li>
+                    <li>Auto-fix lint issues</li>
+                    <li>Prettier formatting</li>
+                    <li>Coding standards enforcement</li>
+                    <li>Technical debt identification</li>
+                </ul>
+            </div>
+
+            <!-- Security Scanning -->
+            <div class="capability-card">
+                <div class="icon">🔒</div>
+                <h3>Security Scanning</h3>
+                <p>Comprehensive security audits and vulnerability management</p>
+                <div class="commands">
+                    <span class="command">@arog run security scan</span>
+                    <span class="command">@arog check for vulnerabilities</span>
+                    <span class="command">@arog audit dependencies</span>
+                    <span class="command">@arog fix security issues</span>
+                </div>
+                <ul>
+                    <li>npm audit scanning</li>
+                    <li>Dependency vulnerability detection</li>
+                    <li>Secret scanning</li>
+                    <li>OWASP compliance checks</li>
+                    <li>Automated security fixes</li>
+                </ul>
+            </div>
+
+            <!-- Performance Testing -->
+            <div class="capability-card">
+                <div class="icon">⚡</div>
+                <h3>Performance Testing</h3>
+                <p>Monitor, analyze, and optimize application performance</p>
+                <div class="commands">
+                    <span class="command">@arog run performance tests</span>
+                    <span class="command">@arog analyze bundle size</span>
+                    <span class="command">@arog check Core Web Vitals</span>
+                    <span class="command">@arog optimize loading speed</span>
+                </div>
+                <ul>
+                    <li>Lighthouse CI testing</li>
+                    <li>Core Web Vitals monitoring</li>
+                    <li>Bundle size analysis</li>
+                    <li>Load time optimization</li>
+                    <li>Performance regression detection</li>
+                </ul>
+            </div>
+
+            <!-- Accessibility Testing -->
+            <div class="capability-card">
+                <div class="icon">♿</div>
+                <h3>Accessibility Testing</h3>
+                <p>Ensure WCAG compliance and inclusive design</p>
+                <div class="commands">
+                    <span class="command">@arog run accessibility tests</span>
+                    <span class="command">@arog check WCAG compliance</span>
+                    <span class="command">@arog fix a11y issues</span>
+                    <span class="command">@arog audit accessibility</span>
+                </div>
+                <ul>
+                    <li>axe-core automated testing</li>
+                    <li>WCAG 2.1 compliance checks</li>
+                    <li>Keyboard navigation testing</li>
+                    <li>Screen reader compatibility</li>
+                    <li>Color contrast validation</li>
+                </ul>
+            </div>
+
+            <!-- Deployment -->
+            <div class="capability-card">
+                <div class="icon">🚀</div>
+                <h3>Deployment Automation</h3>
+                <p>Deploy to staging, production, and manage environments</p>
+                <div class="commands">
+                    <span class="command">@arog deploy to staging</span>
+                    <span class="command">@arog deploy to production</span>
+                    <span class="command">@arog rollback deployment</span>
+                    <span class="command">@arog check deployment status</span>
+                </div>
+                <ul>
+                    <li>Automated deployments</li>
+                    <li>Environment management</li>
+                    <li>Rollback capabilities</li>
+                    <li>Blue-green deployments</li>
+                    <li>Deployment health checks</li>
+                </ul>
+            </div>
+
+            <!-- PR Management -->
+            <div class="capability-card">
+                <div class="icon">🔀</div>
+                <h3>Pull Request Management</h3>
+                <p>Automated PR reviews, approvals, and merge management</p>
+                <div class="commands">
+                    <span class="command">@arog review PR #456</span>
+                    <span class="command">@arog approve PR if tests pass</span>
+                    <span class="command">@arog merge PR #789</span>
+                    <span class="command">@arog check PR status</span>
+                </div>
+                <ul>
+                    <li>Automated PR reviews</li>
+                    <li>Code quality checks on PRs</li>
+                    <li>Test validation before merge</li>
+                    <li>Conflict resolution</li>
+                    <li>PR status tracking</li>
+                </ul>
+            </div>
+
+            <!-- Documentation -->
+            <div class="capability-card">
+                <div class="icon">📚</div>
+                <h3>Documentation</h3>
+                <p>Generate and maintain comprehensive documentation</p>
+                <div class="commands">
+                    <span class="command">@arog generate API docs</span>
+                    <span class="command">@arog update README</span>
+                    <span class="command">@arog create usage guide</span>
+                    <span class="command">@arog document this function</span>
+                </div>
+                <ul>
+                    <li>API documentation generation</li>
+                    <li>README maintenance</li>
+                    <li>Code comments and JSDoc</li>
+                    <li>User guides and tutorials</li>
+                    <li>Architecture documentation</li>
+                </ul>
+            </div>
+
+            <!-- Setup & Configuration -->
+            <div class="capability-card">
+                <div class="icon">⚙️</div>
+                <h3>Setup & Configuration</h3>
+                <p>Project setup, configuration, and environment management</p>
+                <div class="commands">
+                    <span class="command">@arog setup new project</span>
+                    <span class="command">@arog configure CI/CD</span>
+                    <span class="command">@arog setup testing environment</span>
+                    <span class="command">@arog install dependencies</span>
+                </div>
+                <ul>
+                    <li>Project initialization</li>
+                    <li>CI/CD pipeline setup</li>
+                    <li>Environment configuration</li>
+                    <li>Dependency management</li>
+                    <li>Tool configuration</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h2 style="color: #667eea; text-align: center; margin-bottom: 30px;">💡 Real-World Examples</h2>
+            
+            <div class="example">
+                <h4>Complete Feature Development</h4>
+                <div class="user-input">@arog create a user authentication system with login, logout, and password reset</div>
+                <div class="arog-response">
+                    ✅ Created auth components (Login.tsx, Logout.tsx, PasswordReset.tsx)<br>
+                    ✅ Generated unit tests (15 tests, 100% coverage)<br>
+                    ✅ Added E2E tests for auth flows<br>
+                    ✅ Implemented security best practices<br>
+                    ✅ Updated documentation<br>
+                    ✅ Ready for code review
+                </div>
+            </div>
+
+            <div class="example">
+                <h4>Bug Investigation & Fix</h4>
+                <div class="user-input">@arog investigate why checkout is failing in production</div>
+                <div class="arog-response">
+                    🔍 Analyzed logs and identified issue<br>
+                    🐛 Root cause: Race condition in payment processing<br>
+                    🔧 Fixed race condition with proper locking<br>
+                    ✅ Added unit tests for edge case<br>
+                    ✅ Created E2E test for full checkout flow<br>
+                    🚀 Ready to deploy fix
+                </div>
+            </div>
+
+            <div class="example">
+                <h4>Performance Optimization</h4>
+                <div class="user-input">@arog optimize app performance, current LCP is 4.5s</div>
+                <div class="arog-response">
+                    📊 Analyzed bundle size: 850KB (too large)<br>
+                    ⚡ Implemented code splitting<br>
+                    ⚡ Added lazy loading for routes<br>
+                    ⚡ Optimized images (WebP format)<br>
+                    ⚡ Added CDN caching headers<br>
+                    ✅ New LCP: 1.8s (60% improvement)<br>
+                    ✅ All Core Web Vitals now green
+                </div>
+            </div>
+
+            <div class="example">
+                <h4>Security Audit & Remediation</h4>
+                <div class="user-input">@arog run security audit and fix all issues</div>
+                <div class="arog-response">
+                    🔒 Found 12 vulnerabilities (7 low, 5 high)<br>
+                    ✅ Updated 8 dependencies to patched versions<br>
+                    ✅ Removed 2 unused packages with vulnerabilities<br>
+                    ✅ Added input validation to prevent XSS<br>
+                    ✅ Implemented rate limiting<br>
+                    ✅ All security issues resolved
+                </div>
+            </div>
+
+            <div class="example">
+                <h4>Full Deployment Pipeline</h4>
+                <div class="user-input">@arog deploy this feature to production</div>
+                <div class="arog-response">
+                    ✅ All tests passed (Unit: 100/100, E2E: 45/45)<br>
+                    ✅ Lint check passed<br>
+                    ✅ Security scan clean<br>
+                    ✅ Performance tests passed<br>
+                    ✅ Deployed to staging<br>
+                    ✅ Smoke tests passed on staging<br>
+                    ✅ Deployed to production<br>
+                    🚀 Feature live, monitoring metrics
+                </div>
+            </div>
+        </div>
+
+        <div class="workflow-section">
+            <h2>🔄 @arog Complete Workflow</h2>
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Ctext x='400' y='300' text-anchor='middle' font-size='24' fill='%23667eea'%3E@arog Workflow Diagram%3C/text%3E%3C/svg%3E" alt="Workflow" style="max-width: 100%; height: auto;">
+            </div>
+            <ol style="font-size: 1.2em; line-height: 2em; margin: 20px 0 20px 40px;">
+                <li><strong>Development:</strong> Write code, create features, refactor</li>
+                <li><strong>Review:</strong> Automated code review, quality checks</li>
+                <li><strong>Test:</strong> Unit, E2E, integration, accessibility, security tests</li>
+                <li><strong>Build:</strong> Compile, bundle, optimize</li>
+                <li><strong>Validate:</strong> Lint, type check, security scan</li>
+                <li><strong>Deploy:</strong> Staging → Production with health checks</li>
+                <li><strong>Monitor:</strong> Performance metrics, error tracking</li>
+                <li><strong>Optimize:</strong> Continuous improvement based on data</li>
+            </ol>
+        </div>
+
+        <div class="workflow-section">
+            <h2>🌐 Organization-Wide Integration</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">
+                @arog works seamlessly across your entire organization
+            </p>
+            <div class="integration-matrix">
+                <div class="integration-item">GitHub Actions</div>
+                <div class="integration-item">VS Code</div>
+                <div class="integration-item">Slack/Teams</div>
+                <div class="integration-item">Jira/Linear</div>
+                <div class="integration-item">Jenkins/GitLab CI</div>
+                <div class="integration-item">Docker/Kubernetes</div>
+                <div class="integration-item">Monitoring Tools</div>
+                <div class="integration-item">Package Registries</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>🎊 ONE @arog = EVERYTHING</h3>
+            <p style="font-size: 1.3em; margin: 20px 0;">
+                From your first line of code to production deployment,<br>
+                @arog is your complete autonomous development partner.
+            </p>
+            <p style="margin-top: 20px; opacity: 0.9;">
+                Code • Review • Test • Fix • Deploy • Monitor • Optimize • Repeat
+            </p>
+        </div>
+    </div>
+</body>
+</html>
